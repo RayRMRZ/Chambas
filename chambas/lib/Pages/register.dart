@@ -2,6 +2,7 @@
 
 import 'package:chambas/Pages/login.dart';
 import 'package:chambas/constants/colores.dart';
+import 'package:chambas/controller/sesion.dart';
 import 'package:chambas/widgets/elementos.dart';
 import 'package:chambas/widgets/navBar.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     List<Widget> navBarItems = [
@@ -100,17 +102,20 @@ class _RegisterState extends State<Register> {
                         clipBehavior: Clip.antiAlias,
                         controller: ScrollController(),
                         scrollDirection: Axis.vertical,
-                        child: Column(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
                           children: [
-                            campoSencillo("Email / Correo Electronico", email),
-                            campoSencillo("Contraseña", password),
-                            campoSencillo("Contraseña(Nuevamente)", password2),
-                            campoSencillo("Dirección", direccion),
-                            campoSencillo("Nombres", nombres),
-                            campoSencillo("Apellidos", apellidos),
-                            campoSencillo("Edad", edad),
-                            campoSencillo("Número Telefónico", numeroTel),
+                            campoSencillo("Email / Correo Electronico", emailController),
+                            campoSencillo("Contraseña", passwordController),
+                            campoSencillo("Contraseña(Nuevamente)", password2Controller),
+                            campoSencillo("Dirección", direccionController),
+                            campoSencillo("Nombres", nombresController),
+                            campoSencillo("Apellidos", apellidosController),
+                            campoSencillo("Edad", edadController),
+                            campoSencillo("Número Telefónico", numeroTelController),
                           ],
+                        )
                         ),
                       ),
                     ),
@@ -125,8 +130,41 @@ class _RegisterState extends State<Register> {
             padding: EdgeInsets.only(bottom: 10),
             child: InkWell(
               splashColor: Colores.crema,
-              onTap: () {
-                //Navigator.of(context).pushNamed(       .route);  
+              onTap: () async{
+                
+                Map <String,String> persona = {
+                  'email' : emailController.text,
+                  'password' : passwordController.text,
+                  'name': nombresController.text,
+                  'lastname':apellidosController.text,
+                  'address' : direccionController.text,
+                  'age': edadController.text,
+                  'phone': numeroTelController.text
+                };
+                 
+                if (_formKey.currentState!.validate()) {
+
+
+                    Session session = Session();
+                 var registCorrect = await session.signUp(
+                   persona['name'], 
+                   persona['lastname'], 
+                   persona['address'], 
+                   persona['age'], 
+                   persona['email'], 
+                   persona['password'], 
+                   persona['phone']);
+                   
+                 if(registCorrect){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Usted se ha registrado correctamente')),);
+                    Navigator.of(context).pushNamed(Login.route);
+                }else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Verifique si sus datos son correctos')),);
+                }
+                }
+                  
               },
               child: Container(
                 height: height * 0.1,
@@ -211,11 +249,11 @@ class _RegisterState extends State<Register> {
   }
 }
 
-TextEditingController email = TextEditingController();
-TextEditingController password = TextEditingController();
-TextEditingController password2 = TextEditingController();
-TextEditingController direccion = TextEditingController();
-TextEditingController nombres = TextEditingController();
-TextEditingController apellidos = TextEditingController();
-TextEditingController edad = TextEditingController();
-TextEditingController numeroTel = TextEditingController();
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+TextEditingController password2Controller = TextEditingController();
+TextEditingController direccionController = TextEditingController();
+TextEditingController nombresController = TextEditingController();
+TextEditingController apellidosController = TextEditingController();
+TextEditingController edadController = TextEditingController();
+TextEditingController numeroTelController = TextEditingController();

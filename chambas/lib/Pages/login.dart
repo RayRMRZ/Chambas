@@ -2,6 +2,7 @@
 
 import 'package:chambas/Pages/register.dart';
 import 'package:chambas/constants/colores.dart';
+import 'package:chambas/controller/sesion.dart';
 import 'package:chambas/widgets/navBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -161,8 +162,20 @@ class _LoginState extends State<Login> {
             padding: EdgeInsets.only(bottom: 10),
             child: InkWell(
               splashColor: Colores.crema,
-              onTap: () {
-                //Navigator.of(context).pushNamed(       .route);  
+              onTap: () async{
+                var email = emailController.text;
+                var password = passwordController.text;
+                
+                Session session = Session();
+                var signIn = await session.signIn(email, password);
+                if(signIn){
+                  Navigator.of(context).pushNamed(Categorias.route);
+                }else{
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: 
+                    Text('Correo o contraseña incorrecta, verifique sus datos')),);
+                }
+                  
               },
               child: Container(
                 height: height * 0.1,

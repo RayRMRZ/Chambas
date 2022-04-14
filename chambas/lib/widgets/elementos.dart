@@ -15,6 +15,11 @@ Padding campoSencillo(String descripcion, TextEditingController controlador) {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Ingrese un dato valido';
+              }
+            },
             controller: controlador,
             cursorWidth: 2,
             //controller: controlador,
