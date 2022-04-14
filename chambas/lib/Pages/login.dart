@@ -6,6 +6,7 @@ import 'package:chambas/widgets/navBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/elementos.dart';
+import 'categorias.dart';
 
 // ignore: use_key_in_widget_constructors
 class Login extends StatefulWidget {
@@ -15,18 +16,21 @@ class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
+bool _passwordVisible = false;
 
 class _LoginState extends State<Login> {
-  @override
+  final  emailController = TextEditingController();
+  final  passwordController = TextEditingController();
   
+  @override
   Widget build(BuildContext context) {
-
+    
     List<Widget> navBarItems = [
       InkWell(
         mouseCursor: SystemMouseCursors.help,
         splashColor: Colors.white60,
         onTap: () {
-          //Navigator.of(context).pushNamed(Register.route);
+          Navigator.of(context).pushNamed(Categorias.route);
         },
         child: const NavBarItem(
           text: 'Categorías',
@@ -53,8 +57,14 @@ class _LoginState extends State<Login> {
         ),),
     ];
 
+    
+    
+    String _emailLogin = emailController.text;
+    String _passwordLogin = passwordController.text;
+    
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -102,8 +112,41 @@ class _LoginState extends State<Login> {
                       scrollDirection: Axis.vertical,
                       child: Column(
                         children: [
-                          campoSencillo("Email / Correo Electronico", email),
-                          campoSencillo("Contraseña", password),
+                          campoSencillo("Email / Correo Electronico", emailController),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                color: Color.fromRGBO(53, 62, 123, 0.1),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 30),
+                                child: TextFormField(
+                                  
+                                  obscureText: !_passwordVisible,
+                                  controller: passwordController,
+                                  cursorWidth: 2,
+                                  style: TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.start,
+                                  decoration: InputDecoration(
+                                    suffixIcon: IconButton(
+                                      icon: Icon( _passwordVisible ? Icons.visibility_rounded : Icons.visibility_off_rounded,
+                                      color: Colores.azul,
+                                      ),
+                                      onPressed: () => setState(() {
+                                                  _passwordVisible = !_passwordVisible;
+                                                })),
+                                    hintText: "Contraseña",
+                                    hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5),),
+                                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none)),
+                                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none))
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -196,6 +239,7 @@ class _LoginState extends State<Login> {
                     );
                   } else {
                     return Row(
+                      
                       children: navBarItems,
                     );
                   }
@@ -204,11 +248,8 @@ class _LoginState extends State<Login> {
             ),
           ),
         ],
+
       ),
     );
   }
 }
-
-//NAVIGATION BAR ---------------------------------------------------------------------------------------
-
-

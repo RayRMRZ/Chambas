@@ -1,37 +1,37 @@
 // ignore_for_file: use_key_in_widget_constructors, duplicate_ignore, prefer_const_constructors
 
-import 'package:chambas/Pages/login.dart';
+import 'package:chambas/Pages/register.dart';
 import 'package:chambas/constants/colores.dart';
-import 'package:chambas/widgets/elementos.dart';
 import 'package:chambas/widgets/navBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'categorias.dart';
+import 'login.dart';
 
 // ignore: use_key_in_widget_constructors
-class Register extends StatefulWidget {
-  static const String route = '/register'; //NECESARIO PARA LA NEAVEGACION
+class Categorias extends StatefulWidget {
+  static const String route = '/categorias'; //NECESARIO PARA LA NEAVEGACION
 
-  const Register();
+  const Categorias();
   @override
-  _RegisterState createState() => _RegisterState();
+  _CategoriasState createState() => _CategoriasState();
 }
 
-class _RegisterState extends State<Register> {
+class _CategoriasState extends State<Categorias> {
   @override
   Widget build(BuildContext context) {
     List<Widget> navBarItems = [
       InkWell(
-        mouseCursor: SystemMouseCursors.help,
+        splashColor: Colors.white60,
         onTap: () {
-          Navigator.of(context).pushNamed(Categorias.route);
+          Navigator.of(context).pushNamed(Register.route);
         },
         child: const NavBarItem(
-          text: 'Categorias',
+          text: 'Registrarse',
         ),
       ),
       InkWell(
         mouseCursor: SystemMouseCursors.help,
+        splashColor: Colors.white60,
         onTap: () {
           Navigator.of(context).pushNamed(Login.route);
         },
@@ -39,34 +39,25 @@ class _RegisterState extends State<Register> {
           text: 'Ingresar',
         ),
       ),
-      InkWell(
-        mouseCursor: SystemMouseCursors.help,
-        onTap: () {
-          //Navigator.of(context).pushNamed(Login.route);
-        },
-        child: const NavBarItem(
-          text: 'Ayuda',
-        ),
-      ),
     ];
-    
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
-            color: Colores.azul,
+            color: Colores.amarillo,
 
-            // AQUI VA A IR LA IMAGEN DINAMICA DE DIFERENTES OFICIOS
+            // AQUI VA A IR LA IMAGEN DINAMICA DE OFICIOS
           ),
-
-          Center(     //SECCION BLANCA DE PÁGINA
+          Center(
+            //SECCION BLANCA DE PÁGINA
             child: Container(
               //BODY------------------------------
               margin: const EdgeInsets.only(top: 120, bottom: 40),
-              width: width * 0.9,
+              width: width < 700.0 ? width * 0.9 : width * 0.9,
               height: height,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
@@ -84,11 +75,11 @@ class _RegisterState extends State<Register> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 25, bottom: 20),
-                    child: Text("Crea Tu Cuenta",
+                    padding: EdgeInsets.only(top: 25, bottom: 30),
+                    child: Text("Categorías",
                         style: GoogleFonts.quicksand(
                             color: Colores.azul,
-                            fontSize: 45,
+                            fontSize: 30,
                             fontWeight: FontWeight.w700)),
                   ),
                   Expanded(
@@ -96,63 +87,49 @@ class _RegisterState extends State<Register> {
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       height: MediaQuery.of(context).size.height * .7,
                       alignment: Alignment.topCenter,
-                      child: SingleChildScrollView(
-                        clipBehavior: Clip.antiAlias,
+                      child: GridView.count(
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                        padding: EdgeInsets.all(20),
                         controller: ScrollController(),
-                        scrollDirection: Axis.vertical,
-                        child: Column(
+                          childAspectRatio: 1.5,
+                          crossAxisCount: (width < 700.0) ? 2 : 4, //Cuantos elementos por fila
                           children: [
-                            campoSencillo("Email / Correo Electronico", email),
-                            campoSencillo("Contraseña", password),
-                            campoSencillo("Contraseña(Nuevamente)", password2),
-                            campoSencillo("Dirección", direccion),
-                            campoSencillo("Nombres", nombres),
-                            campoSencillo("Apellidos", apellidos),
-                            campoSencillo("Edad", edad),
-                            campoSencillo("Número Telefónico", numeroTel),
+                            botonCategoria(Icons.grass , "Agricultura \ny Plantas", '/'),
+                            botonCategoria(Icons.moped , "A Domicilio", '/'),
+                            botonCategoria(Icons.palette , "Arte \ny Artesanías", '/'),
+                            botonCategoria(Icons.adobe , "Diseño Gráfico", '/'),
+                            botonCategoria(Icons.hardware, "Carpintería", '/'),
+                            botonCategoria(Icons.flatware , "Cocina \ny comida", '/'),
+                            botonCategoria(Icons.build , "Construcción", '/'),
+                            botonCategoria(Icons.bolt, "Electricidad", '/'),
+                            botonCategoria(Icons.account_balance_wallet , "Finanzas \ny Dinero", '/'),
+                            botonCategoria(Icons.handyman , "Fontanería \ny Plomería", '/'),
+                            botonCategoria(Icons.anchor, "Herrería", '/'),
+                            botonCategoria(Icons.house , "Hogar", '/'),
+                            botonCategoria(Icons.cleaning_services , "Limpieza", '/'),
+                            botonCategoria(Icons.car_repair , "Mecánica", '/'),
+                            botonCategoria(Icons.business , "Negocio", '/'),
+                            botonCategoria(Icons.health_and_safety , "Salud", '/'),
+                            botonCategoria(Icons.dry_cleaning , "Sastrería", '/'),
+                            botonCategoria(Icons.security , "Seguridad", '/'),
+                            botonCategoria(Icons.pets , "Veterinaria \ny Mascotas", '/'),
                           ],
                         ),
                       ),
-                    ),
                   ),
                 ],
               ),
             ),
           ),
-
-          Container(          //BOTÓN AMARILLO REGISTRARSE-------------------------
-            alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 10),
-            child: InkWell(
-              splashColor: Colores.crema,
-              onTap: () {
-                //Navigator.of(context).pushNamed(       .route);  
-              },
-              child: Container(
-                height: height * 0.1,
-                width: 200,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colores.amarillo,
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                ),
-                child: Text("Registrarse",
-                    style: GoogleFonts.quicksand(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400)),
-              ),
-            ),
-          ),
-
-          AnimatedContainer( // RESPONSIVE NAVBAR EN MOBILES
+          AnimatedContainer(
             //NAVBAR---------------------
             margin: const EdgeInsets.only(top: 79.0),
             duration: const Duration(milliseconds: 375),
             curve: Curves.ease,
             height: (width < 800.0) ? collapsableHeight : 0.0,
             width: double.infinity,
-            color: Colores.azul,
+            color: Colores.amarillo,
             child: SingleChildScrollView(
               child: Column(
                 children: navBarItems,
@@ -162,7 +139,7 @@ class _RegisterState extends State<Register> {
           Container(
             height: 80.0,
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            decoration: BoxDecoration(color: Colores.azul, boxShadow: [
+            decoration: BoxDecoration(color: Colores.amarillo, boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 spreadRadius: 5,
@@ -181,6 +158,8 @@ class _RegisterState extends State<Register> {
                       padding: const EdgeInsets.all(10),
                       child: Image.asset('assets/circle logo.png')),
                 ),
+
+
                 LayoutBuilder(builder: (context, constraints) {
                   if (width < 800.0) {
                     return NavBarButton(
@@ -209,13 +188,42 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-}
 
-TextEditingController email = TextEditingController();
-TextEditingController password = TextEditingController();
-TextEditingController password2 = TextEditingController();
-TextEditingController direccion = TextEditingController();
-TextEditingController nombres = TextEditingController();
-TextEditingController apellidos = TextEditingController();
-TextEditingController edad = TextEditingController();
-TextEditingController numeroTel = TextEditingController();
+  Material botonCategoria(IconData icono, String texto, String ruta) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+
+          borderRadius: BorderRadius.circular(30),
+          hoverColor: Color.fromRGBO(100, 100, 100, 0.1),
+          onTap: () {
+            Navigator.of(context).pushNamed(ruta);
+          },
+          child: Container(
+            height: 10,
+            width: 250,
+            //margin: EdgeInsets.symmetric(horizontal: 100),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Color.fromRGBO(100, 100, 100, 0.1),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icono,
+                  size: 40,
+                ),
+                Padding(padding: EdgeInsets.only(bottom: 10)),
+                Text(texto,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.quicksand(
+                          color: Colores.azul,
+                          fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ),
+        ),
+    );
+  }
+}

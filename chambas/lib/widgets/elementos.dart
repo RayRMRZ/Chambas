@@ -34,3 +34,4 @@ Padding campoSencillo(String descripcion, TextEditingController controlador) {
       ),
     );
 }
+
