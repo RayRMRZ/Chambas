@@ -1,13 +1,13 @@
 // ignore_for_file: use_key_in_widget_constructors, duplicate_ignore, prefer_const_constructors
 
-import 'package:chambas/Pages/register.dart';
-import 'package:chambas/constants/colores.dart';
-import 'package:chambas/controller/sesion.dart';
-import 'package:chambas/widgets/navBar.dart';
+import 'package:chambas/pages/pages.dart';
+import 'package:chambas/widgets/widgets.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../widgets/elementos.dart';
-import 'categorias.dart';
+
+import 'package:chambas/constants/colores.dart';
+import 'package:chambas/controller/user.dart';
 
 // ignore: use_key_in_widget_constructors
 class Login extends StatefulWidget {
@@ -166,16 +166,22 @@ class _LoginState extends State<Login> {
                 var email = emailController.text;
                 var password = passwordController.text;
                 
-                Session session = Session();
-                var signIn = await session.signIn(email, password);
-                if(signIn){
-                  Navigator.of(context).pushNamed(Categorias.route);
-                }else{
+                User temp = User();
+                Auth signIn = await temp.signIn(email, password);
+                switch(signIn){
+                  case Auth.bad: 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: 
-                    Text('Correo o contraseña incorrecta, verifique sus datos')),);
+                    Text('Verifique sus datos o registrese si aún no tiene cuenta')),); break;
+
+                  case Auth.verify: ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: 
+                    Text('Verifique su correo para comprobar si es valido')),); break;
+
+                  case Auth.good: Navigator.of(context).pushNamed(Categorias.route); break;
+                  default: break;
                 }
-                  
+
               },
               child: Container(
                 height: height * 0.1,
