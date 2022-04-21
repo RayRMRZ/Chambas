@@ -34,7 +34,8 @@ class User {
       } else {
     
       var response = parseSessionFromJson(data);
-      Session(response.token);
+      Session session = Session();
+      session.token = response.token;
 
        name = response.usuario.name;
        lastname = response.usuario.lastname;

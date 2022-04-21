@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:chambas/models/sesion.dart';
+import 'package:chambas/services/notifications.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -20,12 +22,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-    initialRoute: '/',
+    initialRoute: 'check',
     routes: {
+      'home' :(context) => MyHomePage(),
       Register.route: (context) => Register(),
       Login.route: (context) => Login(),
       Categorias.route: (context) => Categorias(),
+      'check':(context) => CheckScreen(),
     },
+    scaffoldMessengerKey: NotificationService.msgKey,
     home: MyHomePage(),
     theme: ThemeData.light().copyWith(),
     debugShowCheckedModeBanner: false,
@@ -39,8 +44,9 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-      ChangeNotifierProvider(create: (_)=> CategoryProvider(), lazy: false, ),
       ChangeNotifierProvider(create: (_)=> LoginProvider(), lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> CategoryProvider(), lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> Session(), lazy: false, ),
       ],
       child: MyApp(),
     );
@@ -59,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final catprovider = Provider.of<CategoryProvider>(context);
+    final session = Provider.of<Session>(context);
 
     List<Widget> navBarItems = [
       InkWell(
@@ -90,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Registrarse',
         ),
       ),
+      IconButton(onPressed: () async{
+        await session.logout();
+        Navigator.pushNamed(context, Login.route);
+      }, icon: Icon(Icons.login_outlined,color: Colores.crema,),)
     ];
 
     double width = MediaQuery.of(context).size.width;

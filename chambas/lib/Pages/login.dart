@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:chambas/providers/providers.dart';
 import 'package:chambas/widgets/widgets.dart';
 import 'package:chambas/pages/pages.dart';
+import 'package:chambas/services/notifications.dart';
 
 import 'package:chambas/constants/colores.dart';
 
@@ -79,7 +80,7 @@ class _LoginState extends State<Login> {
 
           Container(          //BOTÓN AMARILLO REGISTRARSE-------------------------
             alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             child: InkWell(
               splashColor: Colores.crema,
               onTap: loginForm.isLoading ? null : () async{
@@ -96,34 +97,17 @@ class _LoginState extends State<Login> {
 
                 switch(signIn){
                   case Auth.bad: 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(content: Row(
-                      children: const [
-                        Icon(Icons.location_searching,color: Colores.crema,),
-                        SizedBox(width: 20,),
-                        Expanded(child: Text('Verifique sus datos o registrese si aún no tiene cuenta'))],),  
-                   backgroundColor: Colores.rojo,),
-                  ); break;
+                  NotificationService.showSnackBar(msg: 'Verifique sus datos o registrese antes de accesar',
+                  backgroundColor: Colores.rojo, icon: Icons.screen_search_desktop_outlined);
+                  break;
 
                   case Auth.verify: 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(content: Row(
-                      children: const [
-                        Icon(Icons.attach_email_outlined,color: Colores.crema,),
-                        SizedBox(width: 20,),
-                        Expanded(child: Text('Verifique su correo'))],),  
-                   backgroundColor: Colores.azul,),
-                  ); break;
+                  NotificationService.showSnackBar(msg: 'Verifique su correo',
+                  backgroundColor: Colores.azul, icon: Icons.attach_email_outlined);
+                  break;
 
                   case Auth.good: 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(content: Row(
-                      children: const [
-                        Icon(Icons.thumb_up_alt_outlined,color: Colores.crema,),
-                        SizedBox(width: 20,),
-                        Expanded(child: Text('Bienvenido'))],),  
-                   backgroundColor: Colores.amarillo,),);
-                  Navigator.of(context).pushNamed(Categorias.route); break;
+                  Navigator.of(context).pushNamed('home'); break;
                   default: break;
                 }
               }
@@ -135,7 +119,7 @@ class _LoginState extends State<Login> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: loginForm.isLoading ? Colores.azul: Colores.amarillo,
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  borderRadius: const BorderRadius.all(Radius.circular(40)),
                 ),
                 child: Text(loginForm.isLoading ? 'Espere':'Ingresar',
                     style: GoogleFonts.quicksand(

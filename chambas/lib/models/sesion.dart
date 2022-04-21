@@ -1,9 +1,23 @@
 
-class Session{
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-  String token;
+class Session extends ChangeNotifier{
 
-  Session(this.token);
-  
+  String _token = '';
+  final storage = const FlutterSecureStorage();
 
+  Session(){
+    saveTokenStorage();
+  }
+  set token(tkn){ _token = tkn;}
+
+  saveTokenStorage() async{
+    await storage.write(key: 'token', value: _token);
+  }
+  Future <String> readToken() async{
+    return await storage.read(key: 'token') ?? '';
+  }
+
+  Future logout()async{ await storage.delete(key: 'token');}
 }
