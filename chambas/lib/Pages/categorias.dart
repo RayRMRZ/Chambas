@@ -1,11 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, duplicate_ignore, prefer_const_constructors
-
-import 'package:chambas/Pages/register.dart';
-import 'package:chambas/constants/colores.dart';
-import 'package:chambas/widgets/navBar.dart';
 import 'package:flutter/material.dart';
+
+import 'package:chambas/constants/colores.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'login.dart';
+
+import 'package:chambas/pages/pages.dart';
+import 'package:chambas/widgets/widgets.dart';
 
 // ignore: use_key_in_widget_constructors
 class Categorias extends StatefulWidget {

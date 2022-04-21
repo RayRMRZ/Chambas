@@ -1,14 +1,14 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:chambas/pages/pages.dart';
-import 'package:chambas/constants/colores.dart';
-import 'package:chambas/providers/category_provider.dart';
-
-import 'package:chambas/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import 'package:chambas/constants/colores.dart';
+
+import 'package:chambas/pages/pages.dart';
+import 'package:chambas/providers/providers.dart';
+import 'package:chambas/widgets/widgets.dart';
 
 void main() {
   runApp(AppState());
@@ -40,6 +40,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
       ChangeNotifierProvider(create: (_)=> CategoryProvider(), lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> LoginProvider(), lazy: false, ),
       ],
       child: MyApp(),
     );

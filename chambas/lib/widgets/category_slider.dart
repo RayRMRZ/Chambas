@@ -1,10 +1,10 @@
-
-import 'package:chambas/helpers/JSON/category.dart';
 import 'package:flutter/material.dart';
+
+import 'package:chambas/helpers/JSON/helpers.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategorySlider extends StatelessWidget {
-  final List<Categoria> categories;
+  final List<ParseCategory> categories;
   final double width;
 
   const CategorySlider( this.width,
@@ -14,13 +14,13 @@ class CategorySlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-/*     if(this.categories.length == 0){
-      return Container(width: double.infinity, height: 100, 
+    if(categories.isEmpty){
+      return const SizedBox(width: double.infinity, height: 100, 
       child: Center(
         child: CircularProgressIndicator(),
         ),
       );
-    } */
+    } 
     return SizedBox(
       width: double.infinity,
       height: 200,
@@ -46,7 +46,7 @@ class CategorySlider extends StatelessWidget {
   }
 }
 class _CatPosted extends StatelessWidget {
-  final Categoria category;
+  final ParseCategory category;
 
   const _CatPosted(this.category);
 

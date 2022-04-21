@@ -1,16 +1,18 @@
 // ignore: file_names
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
-class HttpService{
-  static final HttpService _singleton = HttpService._internal();
+class AuthService{
 
-  factory HttpService(){
+  static final AuthService _singleton = AuthService._internal();
+
+  factory AuthService(){
     return _singleton;
   }
 
-  HttpService._internal();
+  AuthService._internal();
 
  final rootURI = 'https://appchambas.herokuapp.com';
 

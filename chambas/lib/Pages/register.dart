@@ -1,13 +1,10 @@
-// ignore_for_file: use_key_in_widget_constructors, duplicate_ignore, prefer_const_constructors
-
-import 'package:chambas/pages/pages.dart';
-import 'package:chambas/widgets/widgets.dart';
-
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:chambas/constants/colores.dart';
-
+import 'package:chambas/pages/pages.dart';
+import 'package:chambas/widgets/widgets.dart';
 
 // ignore: use_key_in_widget_constructors
 class Register extends StatefulWidget {
@@ -106,14 +103,12 @@ class _RegisterState extends State<Register> {
                           key: _formKey,
                           child: Column(
                           children: [
-                            campoSencillo("Email / Correo Electronico", emailController),
-                            campoSencillo("Contraseña", passwordController),
-                            campoSencillo("Contraseña(Nuevamente)", password2Controller),
-                            campoSencillo("Dirección", direccionController),
-                            campoSencillo("Nombres", nombresController),
-                            campoSencillo("Apellidos", apellidosController),
-                            campoSencillo("Edad", edadController),
-                            campoSencillo("Número Telefónico", numeroTelController),
+                            field('Correo Electronico', emailController),
+                            field('dirección', direccionController),
+                            field('Nombres', nombresController),
+                            field('Apellidos', apellidosController),
+                            field('Edad',edadController),
+                            field('Número telefónico', numeroTelController),
                           ],
                         )
                         ),

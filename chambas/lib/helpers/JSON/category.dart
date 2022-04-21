@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-Categories categoriesFromJson(String str) => Categories.fromJson(json.decode(str));
+ParseCategories categoriesFromJson(String str) => ParseCategories.fromJson(json.decode(str));
 
-String categoriesToJson(Categories data) => json.encode(data.toJson());
+String categoriesToJson(ParseCategories data) => json.encode(data.toJson());
 
-class Categories {
-    Categories({
+class ParseCategories {
+    ParseCategories({
         required this.route,
         required this.total,
         required this.categorias,
@@ -17,12 +17,12 @@ class Categories {
 
     String route;
     int total;
-    List<Categoria> categorias;
+    List<ParseCategory> categorias;
 
-    factory Categories.fromJson(Map<String, dynamic> json) => Categories(
+    factory ParseCategories.fromJson(Map<String, dynamic> json) => ParseCategories(
         route: json['route'],
         total: json['total'],
-        categorias: List<Categoria>.from(json['categorias'].map((x) => Categoria.fromJson(x))),
+        categorias: List<ParseCategory>.from(json['categorias'].map((x) => ParseCategory.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -32,8 +32,8 @@ class Categories {
     };
 }
 
-class Categoria {
-    Categoria({
+class ParseCategory {
+    ParseCategory({
         required this.name,
         required this.usuario,
         required this.img,
@@ -49,7 +49,7 @@ class Categoria {
     String img;
     String uid;
 
-    factory Categoria.fromJson(Map<String, dynamic> json) => Categoria(
+    factory ParseCategory.fromJson(Map<String, dynamic> json) => ParseCategory(
         name: json['name'],
         usuario: Usuario.fromJson(json['usuario']),
         img: json['img'],

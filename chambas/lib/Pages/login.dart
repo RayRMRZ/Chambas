@@ -1,13 +1,15 @@
-// ignore_for_file: use_key_in_widget_constructors, duplicate_ignore, prefer_const_constructors
-
-import 'package:chambas/pages/pages.dart';
-import 'package:chambas/widgets/widgets.dart';
-
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:chambas/providers/providers.dart';
+import 'package:chambas/widgets/widgets.dart';
+import 'package:chambas/pages/pages.dart';
+
 import 'package:chambas/constants/colores.dart';
-import 'package:chambas/controller/user.dart';
+
+import '../models/user.dart';
 
 // ignore: use_key_in_widget_constructors
 class Login extends StatefulWidget {
@@ -17,7 +19,6 @@ class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
-bool _passwordVisible = false;
 
 class _LoginState extends State<Login> {
   final  emailController = TextEditingController();
@@ -25,7 +26,8 @@ class _LoginState extends State<Login> {
   
   @override
   Widget build(BuildContext context) {
-    
+    final loginForm = Provider.of<LoginProvider>(context);
+
     List<Widget> navBarItems = [
       InkWell(
         mouseCursor: SystemMouseCursors.help,
@@ -57,11 +59,6 @@ class _LoginState extends State<Login> {
           text: 'Ayuda',
         ),),
     ];
-
-    
-    
-    String _emailLogin = emailController.text;
-    String _passwordLogin = passwordController.text;
     
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -74,113 +71,62 @@ class _LoginState extends State<Login> {
 
             // AQUI VA A IR LA IMAGEN DINAMICA DE OFICIOS
           ),
-          Center(     //SECCION BLANCA DE PÁGINA
-            child: Container(
-              //BODY------------------------------
-              margin: const EdgeInsets.only(top: 120, bottom: 40),
-              width: width < 700.0 ? width*0.9 : width*0.5,
-              height: height,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 10,
-                    blurRadius: 20,
-                    offset: const Offset(0, 0), // changes position of shadow
-                  ),
-                ],
-              ),
-              alignment: Alignment.bottomRight,
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 25, bottom: 20),
-                    child: Text("Ingresa a tu cuenta",
-                        style: GoogleFonts.quicksand(
-                            color: Colores.azul,
-                            fontSize: 35,
-                            fontWeight: FontWeight.w700)),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    height: MediaQuery.of(context).size.height * .55,
-                    alignment: Alignment.topCenter,
-                    child: SingleChildScrollView(
-                      clipBehavior: Clip.antiAlias,
-                      controller: ScrollController(),
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          campoSencillo("Email / Correo Electronico", emailController),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: Color.fromRGBO(53, 62, 123, 0.1),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 30),
-                                child: TextFormField(
-                                  
-                                  obscureText: !_passwordVisible,
-                                  controller: passwordController,
-                                  cursorWidth: 2,
-                                  style: TextStyle(color: Colors.black),
-                                  textAlign: TextAlign.start,
-                                  decoration: InputDecoration(
-                                    suffixIcon: IconButton(
-                                      icon: Icon( _passwordVisible ? Icons.visibility_rounded : Icons.visibility_off_rounded,
-                                      color: Colores.azul,
-                                      ),
-                                      onPressed: () => setState(() {
-                                                  _passwordVisible = !_passwordVisible;
-                                                })),
-                                    hintText: "Contraseña",
-                                    hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5),),
-                                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none)),
-                                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none))
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+           LoginForm(width,
+                    height,
+                    emailController,
+                    passwordController,
+                    loginForm), 
 
           Container(          //BOTÓN AMARILLO REGISTRARSE-------------------------
             alignment: Alignment.bottomCenter,
             padding: EdgeInsets.only(bottom: 10),
             child: InkWell(
               splashColor: Colores.crema,
-              onTap: () async{
+              onTap: loginForm.isLoading ? null : () async{
                 var email = emailController.text;
                 var password = passwordController.text;
                 
+              if(loginForm.isValidForm()){
                 User temp = User();
+                loginForm.loadState = true;
+
                 Auth signIn = await temp.signIn(email, password);
+
+                loginForm.loadState = false;
+
                 switch(signIn){
                   case Auth.bad: 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: 
-                    Text('Verifique sus datos o registrese si aún no tiene cuenta')),); break;
+                     SnackBar(content: Row(
+                      children: const [
+                        Icon(Icons.location_searching,color: Colores.crema,),
+                        SizedBox(width: 20,),
+                        Expanded(child: Text('Verifique sus datos o registrese si aún no tiene cuenta'))],),  
+                   backgroundColor: Colores.rojo,),
+                  ); break;
 
-                  case Auth.verify: ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: 
-                    Text('Verifique su correo para comprobar si es valido')),); break;
+                  case Auth.verify: 
+                  ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Row(
+                      children: const [
+                        Icon(Icons.attach_email_outlined,color: Colores.crema,),
+                        SizedBox(width: 20,),
+                        Expanded(child: Text('Verifique su correo'))],),  
+                   backgroundColor: Colores.azul,),
+                  ); break;
 
-                  case Auth.good: Navigator.of(context).pushNamed(Categorias.route); break;
+                  case Auth.good: 
+                  ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Row(
+                      children: const [
+                        Icon(Icons.thumb_up_alt_outlined,color: Colores.crema,),
+                        SizedBox(width: 20,),
+                        Expanded(child: Text('Bienvenido'))],),  
+                   backgroundColor: Colores.amarillo,),);
+                  Navigator.of(context).pushNamed(Categorias.route); break;
                   default: break;
                 }
+              }
 
               },
               child: Container(
@@ -188,10 +134,10 @@ class _LoginState extends State<Login> {
                 width: 200,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colores.amarillo,
+                  color: loginForm.isLoading ? Colores.azul: Colores.amarillo,
                   borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
-                child: Text("Ingresar",
+                child: Text(loginForm.isLoading ? 'Espere':'Ingresar',
                     style: GoogleFonts.quicksand(
                         color: Colors.white,
                         fontSize: 25,

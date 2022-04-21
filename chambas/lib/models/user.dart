@@ -1,6 +1,6 @@
-import 'package:chambas/API/httpService.dart';
-import 'package:chambas/controller/sesion.dart';
-import 'package:chambas/helpers/JSON/session.dart';
+import 'package:chambas/services/authService.dart';
+import 'package:chambas/models/sesion.dart';
+import 'package:chambas/helpers/JSON/helpers.dart';
 
 class User {
   static final User _singleton = User._internal();
@@ -23,10 +23,11 @@ class User {
   late bool verify;
 
   Future <Auth> signIn(String email, String password) async{
-    HttpService conexion = HttpService();
+    AuthService conexion = AuthService();
     String data = await conexion.auth(email: email, password: password);
 
     if(data != 'auth.fallo'){
+
       if(data == 'auth.verificar')
       {
         return Auth.verify;
