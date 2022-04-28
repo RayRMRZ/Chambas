@@ -7,20 +7,21 @@ import '../constants/colores.dart';
 
   tarjetaPerfil(String imagen, String profesion, String name, int stars, String ruta, BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    // ignore: unused_local_variable
     double height = MediaQuery.of(context).size.height;
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(30),
-        hoverColor: Color.fromRGBO(100, 100, 100, 0.08),
+        hoverColor: const Color.fromRGBO(100, 100, 100, 0.08),
         onTap: () {
           Navigator.of(context).pushNamed(ruta);
         },
         child: Container(
           height: 60,
           width: 60,
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,

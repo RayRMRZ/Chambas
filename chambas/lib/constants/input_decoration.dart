@@ -7,9 +7,9 @@ class InputDecorations{
                 hintStyle: const TextStyle(
                   color: Color.fromRGBO(0, 0, 0, 0.5),
                 ),
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(style: BorderStyle.none)),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(style: BorderStyle.none)));
   }
 }

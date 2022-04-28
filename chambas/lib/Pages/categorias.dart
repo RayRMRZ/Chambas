@@ -10,6 +10,7 @@ import 'package:chambas/widgets/widgets.dart';
 class Categorias extends StatefulWidget {
   static const String route = '/categorias'; //NECESARIO PARA LA NEAVEGACION
 
+  // ignore: use_key_in_widget_constructors
   const Categorias();
   @override
   _CategoriasState createState() => _CategoriasState();
@@ -74,7 +75,7 @@ class _CategoriasState extends State<Categorias> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 25, bottom: 30),
+                    padding: const EdgeInsets.only(top: 25, bottom: 30),
                     child: Text("Categorías",
                         style: GoogleFonts.quicksand(
                             color: Colores.azul,
@@ -83,13 +84,13 @@ class _CategoriasState extends State<Categorias> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       height: MediaQuery.of(context).size.height * .7,
                       alignment: Alignment.topCenter,
                       child: GridView.count(
                         mainAxisSpacing: 15,
                         crossAxisSpacing: 15,
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         controller: ScrollController(),
                           childAspectRatio: 1.5,
                           crossAxisCount: (width < 700.0) ? 2 : 4, //Cuantos elementos por fila
@@ -194,7 +195,7 @@ class _CategoriasState extends State<Categorias> {
       child: InkWell(
 
           borderRadius: BorderRadius.circular(30),
-          hoverColor: Color.fromRGBO(100, 100, 100, 0.1),
+          hoverColor: const Color.fromRGBO(100, 100, 100, 0.1),
           onTap: () {
             Navigator.of(context).pushNamed(ruta);
           },
@@ -204,7 +205,7 @@ class _CategoriasState extends State<Categorias> {
             //margin: EdgeInsets.symmetric(horizontal: 100),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
-              color: Color.fromRGBO(100, 100, 100, 0.1),
+              color: const Color.fromRGBO(100, 100, 100, 0.1),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -213,7 +214,7 @@ class _CategoriasState extends State<Categorias> {
                   icono,
                   size: 40,
                 ),
-                Padding(padding: EdgeInsets.only(bottom: 10)),
+                const Padding(padding: EdgeInsets.only(bottom: 10)),
                 Text(texto,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.quicksand(

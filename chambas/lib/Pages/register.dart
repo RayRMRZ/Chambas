@@ -83,7 +83,7 @@ class _RegisterState extends State<Register> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 25, bottom: 20),
+                    padding: const EdgeInsets.only(top: 25, bottom: 20),
                     child: Text("Crea Tu Cuenta",
                         style: GoogleFonts.quicksand(
                             color: Colores.azul,
@@ -92,7 +92,7 @@ class _RegisterState extends State<Register> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       height: MediaQuery.of(context).size.height * .7,
                       alignment: Alignment.topCenter,
                       child: SingleChildScrollView(
@@ -122,7 +122,7 @@ class _RegisterState extends State<Register> {
 
           Container(          //BOTÓN AMARILLO REGISTRARSE-------------------------
             alignment: Alignment.bottomCenter,
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             child: InkWell(
               splashColor: Colores.crema,
               onTap: () async{
@@ -165,7 +165,7 @@ class _RegisterState extends State<Register> {
                 height: height * 0.1,
                 width: 200,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colores.amarillo,
                   borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),

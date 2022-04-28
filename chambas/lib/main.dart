@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:chambas/Pages/ProfileEdit.dart';
+import 'package:chambas/Pages/UserProfile.dart';
 import 'package:chambas/models/sesion.dart';
 import 'package:chambas/services/notifications.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ import 'package:chambas/constants/colores.dart';
 import 'package:chambas/pages/pages.dart';
 import 'package:chambas/providers/providers.dart';
 import 'package:chambas/widgets/widgets.dart';
+
+import 'models/user.dart';
 
 void main() {
   runApp(AppState());
@@ -28,7 +32,10 @@ class MyApp extends StatelessWidget {
       Register.route: (context) => Register(),
       Login.route: (context) => Login(),
       Categorias.route: (context) => Categorias(),
+      UserProfile.route: (context) => UserProfile(),
+      ProfileEdit.route: (context) => ProfileEdit(),
       'check':(context) => CheckScreen(),
+
     },
     scaffoldMessengerKey: NotificationService.msgKey,
     home: MyHomePage(),
@@ -69,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     List<Widget> navBarItems = [
       InkWell(
-        mouseCursor: SystemMouseCursors.move,
         splashColor: Colors.white60,
         onTap: () {
           Navigator.of(context).pushNamed(Categorias.route);
@@ -78,17 +84,18 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Categorías',
         ),
       ),
-      InkWell(
-        mouseCursor: SystemMouseCursors.help,
+
+      if(true) InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(Login.route);
         },
         child: const NavBarItem(
-          text: 'Ingresar',
-        ),
+          text: 'Ingresar',),
       ),
+
+
+
       InkWell(
-        mouseCursor: SystemMouseCursors.help,
         splashColor: Colors.white60,
         onTap: () {
           Navigator.of(context).pushNamed(Register.route);
@@ -97,14 +104,22 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Registrarse',
         ),
       ),
+
+      InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(UserProfile.route);
+        },
+        child: const NavBarItem(
+          text: 'Perfil',),
+      ),
+
       IconButton(onPressed: () async{
         await session.logout();
         Navigator.pushNamed(context, Login.route);
-      }, icon: Icon(Icons.login_outlined,color: Colores.crema,),)
+      }, icon: Icon(Icons.logout,color: Colores.crema,),)
     ];
 
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
 
 
     return Scaffold(
@@ -124,7 +139,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [ CategorySlider(width,categories: catprovider.onDisplayCategory), 
+                    children: [ CategorySlider(width,categories: catprovider.onDisplayCategory),
+                    
+                    Divider( height: 20,),
+
                      /* SizedBox(
                       height: (width > 1050)? 300 :(width > 700.0)? 250 : 500,
                       child: GridView.count(
@@ -162,7 +180,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-
+                    Divider( height: 20,),
+                    
                     Text("      Contratados Recientemente",
                             textAlign: TextAlign.left, 
                             style: GoogleFonts.quicksand(

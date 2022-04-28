@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 import '../constants/colores.dart';
@@ -13,6 +15,7 @@ class LoginForm extends StatelessWidget {
   final passwordController;
   final loginForm;
 
+  // ignore: use_key_in_widget_constructors
   const LoginForm(this.width,this.height, this.emailController, this.passwordController, this.loginForm);
 
   @override
@@ -42,7 +45,12 @@ class LoginForm extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 25, bottom: 20),
+                      height: 160,
+                      margin: const EdgeInsets.all(30),
+                      child: Image.asset('assets/full logo.png'),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only( bottom: 10),
                       child: Text("Ingresa a tu cuenta",
                           style: GoogleFonts.quicksand(
                               color: Colores.azul,
@@ -50,8 +58,8 @@ class LoginForm extends StatelessWidget {
                               fontWeight: FontWeight.w700)),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      height: MediaQuery.of(context).size.height * .55,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+//                      height: MediaQuery.of(context).size.height * .55,
                       alignment: Alignment.topCenter,
                       child: SingleChildScrollView(
                         clipBehavior: Clip.antiAlias,
@@ -72,14 +80,15 @@ class LoginForm extends StatelessWidget {
           );
   }
 } 
+
 Padding field(String descripcion, TextEditingController controlador) {
   return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
-          color: Color.fromRGBO(53, 62, 123, 0.1),
+          color: const Color.fromRGBO(53, 62, 123, 0.1),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -92,16 +101,16 @@ Padding field(String descripcion, TextEditingController controlador) {
             controller: controlador,
             cursorWidth: 2,
             //controller: controlador,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             textAlign: TextAlign.start,
             decoration: InputDecoration(
                 hintText: descripcion,
                 hintStyle: const TextStyle(
                   color: Color.fromRGBO(0, 0, 0, 0.5),
                 ),
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(style: BorderStyle.none)),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(style: BorderStyle.none))),
           ),
         ),
@@ -113,10 +122,10 @@ Padding emailField(String hint, TextEditingController controller) {
   return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(40),
-          color: Color.fromRGBO(53, 62, 123, 0.1),
+          color: const Color.fromRGBO(53, 62, 123, 0.1),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -133,7 +142,7 @@ Padding emailField(String hint, TextEditingController controller) {
             controller: controller,
             cursorWidth: 2,
             //controller: controlador,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             textAlign: TextAlign.start,
             decoration: InputDecorations.authInputDecoration(hint: hint),
           ),
@@ -145,12 +154,12 @@ Padding emailField(String hint, TextEditingController controller) {
 
 Padding passwordField(String hint, TextEditingController controller, LoginProvider login) {
   return   Padding(
-    padding: EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(8.0),
       child: Container(
-     margin: EdgeInsets.symmetric(horizontal: 20),
+     margin: const EdgeInsets.symmetric(horizontal: 20),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(40),
-        color: Color.fromRGBO(53, 62, 123, 0.1),),
-        child: Padding( padding: EdgeInsets.symmetric(horizontal: 30),
+        color: const Color.fromRGBO(53, 62, 123, 0.1),),
+        child: Padding( padding: const EdgeInsets.symmetric(horizontal: 30),
                  child: TextFormField( obscureText: login.isHiddenPass,
             controller: controller,
            cursorWidth: 2,
@@ -161,7 +170,7 @@ Padding passwordField(String hint, TextEditingController controller, LoginProvid
                 ? null
             :'La contraseña debe tener al menos 8 caracteres, una letra mayuscula, un número y un simbolo especial';
           },
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
           textAlign: TextAlign.start,
          decoration: InputDecoration(
          suffixIcon: IconButton(
@@ -172,8 +181,8 @@ Padding passwordField(String hint, TextEditingController controller, LoginProvid
                         }),
         hintText: hint,
        hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5),),
-     enabledBorder: UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none)),
-     focusedBorder: UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none))),
+     enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none)),
+     focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(style: BorderStyle.none))),
                                     ),
                    ),
                  ),

@@ -29,8 +29,8 @@ class CategorySlider extends StatelessWidget {
         children: [
           Padding(
           // ignore: prefer_const_constructors
-          padding: EdgeInsets.symmetric(horizontal: 20,),
-          child: Text('Categoria',textAlign: TextAlign.center, style: GoogleFonts.quicksand(
+          padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20,),
+          child: Text('Categorias',textAlign: TextAlign.center, style: GoogleFonts.quicksand(
                             color: Colors.black, fontWeight: FontWeight.w500)),),
           Expanded(
             child: ListView.builder(
@@ -53,24 +53,28 @@ class _CatPosted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: 70,
-      margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-      child: Column(children: [
-        GestureDetector(
-          onTap: () => Navigator.of(context).pushNamed('/'),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: FadeInImage(
-              placeholder: const AssetImage('assets/logo.png'), 
-              image: NetworkImage(category.img),
-              fit: BoxFit.cover,),
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(category.getName(), maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,),
-
-      ]),
+      width: 120,
+      height: 120,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: InkWell(
+        onTap: () => Navigator.of(context).pushNamed('/'),
+        child: Column(children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage('assets/logo.png'), 
+                  image: NetworkImage(category.img),
+                  //fit: BoxFit.cover,
+                  ),
+              ),
+            ),
+          //const SizedBox(height: 10),
+          Text(category.getName(), maxLines: 2, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,),
+      
+        ]),
+      ),
     ); 
   }
 }

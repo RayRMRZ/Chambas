@@ -18,9 +18,12 @@ class User {
 
   late String img;
 
-  late String email;
+  late String emailUsr;
+  late String phone;
+
   late DateTime registerTime;
   late bool verify;
+
 
   Future <Auth> signIn(String email, String password) async{
     AuthService conexion = AuthService();
@@ -40,15 +43,20 @@ class User {
        name = response.usuario.name;
        lastname = response.usuario.lastname;
        age = response.usuario.age;
+       address = response.usuario.address;
        img = response.usuario.img;
-       email = response.usuario.email;
+       emailUsr = response.usuario.email;
+       phone = response.usuario.phone;
+       
        registerTime = response.usuario.createdAt;
        verify = response.usuario.verify;
+
 
       return Auth.good; 
       } 
     }else {return Auth.bad;}    
   }
+  
 }
 
 enum Auth{
