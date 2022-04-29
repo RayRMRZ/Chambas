@@ -2,7 +2,9 @@
 import 'package:chambas/Pages/ProfileEdit.dart';
 import 'package:chambas/Pages/UserProfile.dart';
 import 'package:chambas/models/sesion.dart';
+import 'package:chambas/providers/freelancer_provider.dart';
 import 'package:chambas/services/notifications.dart';
+import 'package:chambas/widgets/popular_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -54,6 +56,7 @@ class AppState extends StatelessWidget {
       ChangeNotifierProvider(create: (_)=> LoginProvider(), lazy: false, ),
       ChangeNotifierProvider(create: (_)=> CategoryProvider(), lazy: false, ),
       ChangeNotifierProvider(create: (_)=> Session(), lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> FreelancerProvider(), lazy: false, ),
       ],
       child: MyApp(),
     );
@@ -72,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final catprovider = Provider.of<CategoryProvider>(context);
+    final freeprovider = Provider.of<FreelancerProvider>(context);
     final session = Provider.of<Session>(context);
 
     List<Widget> navBarItems = [
@@ -127,8 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Container(
             color: Colors.grey.withOpacity(0.1),
-
-            // AQUI VA A IR LA IMAGEN DINAMICA DE OFICIOS
           ),
            Container(
             margin: EdgeInsets.only(top: 80),
@@ -139,47 +141,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [ CategorySlider(width,categories: catprovider.onDisplayCategory),
-                    
+                    children: [ 
+                    CategorySlider(width,categories: catprovider.onDisplayCategory),
                     Divider( height: 20,),
-
-                     /* SizedBox(
-                      height: (width > 1050)? 300 :(width > 700.0)? 250 : 500,
-                      child: GridView.count(
-                        controller: ScrollController(),
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        padding: EdgeInsets.all(20),
-                        childAspectRatio: (width > 1050)? 0.85 :(width > 700.0)? 0.5 : 0.7,
-                        crossAxisCount: (width < 700.0) ? 3 : 6, //Cuantos elementos por fila
-                        children: [
-                          
-                          botonCircular('assets/herramienta.png', 'Reparación\n', '/',context),
-                          botonCircular('assets/saludable.png', 'Mi salud\n', '/',context),
-                          botonCircular('assets/tienda.png', 'Para mi\nnegocio', '/',context),
-                        ],
-                      ),
-                    ), */ 
-                    Text("      Profesionistas Destacados",
-                            textAlign: TextAlign.left, 
-                            style: GoogleFonts.quicksand(
-                            color: Colors.black, fontWeight: FontWeight.w500)),
-                    SizedBox(
-                      height: (width > 1050)? 300 :(width > 700.0)? 200 : 400,
-                      child: GridView.count(
-                        mainAxisSpacing: 5,
-                        crossAxisSpacing: 5,
-                        padding: EdgeInsets.all(20),
-                        childAspectRatio: (width < 700.0) ? 5 : 3,
-                        crossAxisCount: (width < 700.0) ? 1 : 3, //Cuantos elementos por fila
-                        children: [
-                          
-                          tarjetaPerfil('assets/profile pic.png', 'Diseñador Gráfico', 'Raymundo Ramirez A.', 4, '/', context),
-                          tarjetaPerfil('assets/profile pic.png', 'Electrico', 'Azael Moreno R.', 2, '/', context),
-                          tarjetaPerfil('assets/profile pic.png', 'Veterinario', 'Gustavo Balderas R.', 5, '/', context),
-                        ],
-                      ),
-                    ),
+                    PopularFrelancers(width, popular: freeprovider.onDisplayFreelancer),
                     Divider( height: 20,),
                     
                     Text("      Contratados Recientemente",
@@ -195,9 +160,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         childAspectRatio: (width < 700.0) ? 5 : 3,
                         crossAxisCount: (width < 700.0) ? 1 : 3, //Cuantos elementos por fila
                         children: [
-                          tarjetaPerfil('assets/profile pic.png', 'Albañil', 'Pablo Mendoza B.', 3, '/', context),
-                          tarjetaPerfil('assets/profile pic.png', 'Plomero', 'Javier Martinez G.', 4, '/', context),
-                          tarjetaPerfil('assets/profile pic.png', 'Talachero', 'Gabriel Sanchez T.', 4, '/', context),
+                          perfilCard('assets/profile pic.png', 'Albañil', 'Pablo Mendoza B.', 3, '/', context),
+                          perfilCard('assets/profile pic.png', 'Plomero', 'Javier Martinez G.', 4, '/', context),
+                          perfilCard('assets/profile pic.png', 'Talachero', 'Gabriel Sanchez T.', 4, '/', context),
                         ],
                       ),
                     ),

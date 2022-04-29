@@ -1,10 +1,12 @@
+import 'package:chambas/services/authService.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:chambas/constants/colores.dart';
 import 'package:chambas/pages/pages.dart';
 import 'package:chambas/widgets/widgets.dart';
+import 'package:chambas/providers/providers.dart';
 
 // ignore: use_key_in_widget_constructors
 class Register extends StatefulWidget {
@@ -19,6 +21,7 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+  final loginForm = Provider.of<LoginProvider>(context);
     List<Widget> navBarItems = [
       InkWell(
         mouseCursor: SystemMouseCursors.help,
@@ -103,11 +106,12 @@ class _RegisterState extends State<Register> {
                           key: _formKey,
                           child: Column(
                           children: [
-                            field('Correo Electronico', emailController),
-                            field('dirección', direccionController),
                             field('Nombres', nombresController),
                             field('Apellidos', apellidosController),
+                            field('Correo Electronico', emailController),
+                            passwordField('Contraseña',passwordController,loginForm),
                             field('Edad',edadController),
+                            field('Dirección', direccionController),
                             field('Número telefónico', numeroTelController),
                           ],
                         )
@@ -139,16 +143,15 @@ class _RegisterState extends State<Register> {
                  
                 if (_formKey.currentState!.validate()) {
 
-
-/*                     Session session = Session();
-                 var registCorrect = await session.signUp(
-                   persona['name'], 
-                   persona['lastname'], 
-                   persona['address'], 
-                   persona['age'], 
-                   persona['email'], 
-                   persona['password'], 
-                   persona['phone']);
+                  AuthService user = AuthService();
+                 var registCorrect = await user.checkIn(
+                   name: persona['name'] ?? "", 
+                   lastname: persona['lastname'] ?? "", 
+                   address: persona['address'] ?? "", 
+                   age : persona['age'] ?? "", 
+                   email: persona['email'] ?? "", 
+                   password: persona['password'] ?? "" , 
+                   phone: persona['phone'] ?? "" );
                    
                  if(registCorrect){
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -157,7 +160,7 @@ class _RegisterState extends State<Register> {
                 }else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Verifique si sus datos son correctos')),);
-                } */
+                } 
                 }
                   
               },

@@ -3,6 +3,7 @@
 //     final categories = categoriesFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:chambas/helpers/JSON/helpers.dart';
 
 ParseCategories categoriesFromJson(String str) => ParseCategories.fromJson(json.decode(str));
 
@@ -64,26 +65,35 @@ class ParseCategory {
     };
 }
 
-class Usuario {
-    Usuario({
+class Category {
+    Category({
         required this.id,
         required this.name,
-        required this.lastname,
+        required this.state,
+        required this.v,
+        required this.img,
     });
 
     String id;
     String name;
-    String lastname;
+    bool state;
+    int v;
+    String img;
 
-    factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
-        id: json['_id'],
-        name: json['name'],
-        lastname: json['lastname'],
+    factory Category.fromJson(Map<String, dynamic> json) => Category(
+        id: json["_id"],
+        name: json["name"],
+        state: json["state"],
+        v: json["__v"],
+        img: json["img"],
     );
 
     Map<String, dynamic> toJson() => {
-        '_id': id,
-        'name': name,
-        'lastname': lastname,
+        "_id": id,
+        "name": name,
+        "state": state,
+        "__v": v,
+        "img": img,
     };
 }
+

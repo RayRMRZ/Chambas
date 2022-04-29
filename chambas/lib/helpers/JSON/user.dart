@@ -58,3 +58,51 @@ class ParseUser {
         "uid": uid,
     };
 }
+
+class Usuario {
+    Usuario({
+        required this.id,
+        required this.name,
+        required this.lastname,
+    });
+
+    String id;
+    String name;
+    String lastname;
+
+    factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
+        id: json['_id'],
+        name: json['name'],
+        lastname: json['lastname'],
+    );
+
+    Map<String, dynamic> toJson() => {
+        '_id': id,
+        'name': name,
+        'lastname': lastname,
+    };
+}
+
+class Reference {
+    Reference({
+        required this.id,
+        required this.name,
+        required this.lastname,
+    });
+
+    String id;
+    String name;
+    String lastname;
+
+    factory Reference.fromJson(Map<String, dynamic> json) => Reference(
+        id: json["_id"],
+        name: json["name"],
+        lastname: json["lastname"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+        "lastname": lastname,
+    };
+}

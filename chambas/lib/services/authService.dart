@@ -47,7 +47,7 @@ class AuthService{
     return data;
   }
 
-  Future <bool> checkIn(String name, String lastname, String address, String age, String email, String password, String phone) async{
+  Future <bool> checkIn({required String name, required String lastname,required String address,required String age,required String email,required String password ,required String phone }) async{
     final url = Uri.parse('$rootURI/api/usuarios');
     var frame = jsonEncode({
 	  'name'    :     name,
@@ -56,7 +56,7 @@ class AuthService{
 	  'age'     : age,
 	  'email'   : email,
 	  'password': password,
-	  'phone'   : phone,
+	  'phone'   : phone, 
 	  'role'    : "USER_ROLE"});
 
     Completer completer = Completer<String>();
