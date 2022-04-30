@@ -88,21 +88,25 @@ class Reference {
         required this.id,
         required this.name,
         required this.lastname,
+        required this.img
     });
 
     String id;
     String name;
     String lastname;
+    String img;
 
     factory Reference.fromJson(Map<String, dynamic> json) => Reference(
         id: json["_id"],
         name: json["name"],
         lastname: json["lastname"],
+        img: json["img"],
     );
 
     Map<String, dynamic> toJson() => {
         "_id": id,
         "name": name,
         "lastname": lastname,
+        "img": img
     };
 }

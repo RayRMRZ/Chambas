@@ -23,6 +23,11 @@ class User {
 
   late DateTime registerTime;
   late bool verify;
+  late String _token = '';
+
+  String get token{
+    return _token;
+  } 
 
 
   Future <Auth> signIn(String email, String password) async{
@@ -38,7 +43,7 @@ class User {
     
       var response = parseSessionFromJson(data);
       Session session = Session();
-      session.token = response.token;
+      session.token = response.token; _token = response.token;
 
        name = response.usuario.name;
        lastname = response.usuario.lastname;

@@ -2,7 +2,7 @@
 import 'package:chambas/Pages/ProfileEdit.dart';
 import 'package:chambas/Pages/UserProfile.dart';
 import 'package:chambas/models/sesion.dart';
-import 'package:chambas/providers/freelancer_provider.dart';
+
 import 'package:chambas/services/notifications.dart';
 import 'package:chambas/widgets/popular_slider.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,6 @@ import 'package:chambas/constants/colores.dart';
 import 'package:chambas/pages/pages.dart';
 import 'package:chambas/providers/providers.dart';
 import 'package:chambas/widgets/widgets.dart';
-
-import 'models/user.dart';
 
 void main() {
   runApp(AppState());
@@ -36,6 +34,7 @@ class MyApp extends StatelessWidget {
       Categorias.route: (context) => Categorias(),
       UserProfile.route: (context) => UserProfile(),
       ProfileEdit.route: (context) => ProfileEdit(),
+      FreeInfo.route: (context)=> FreeInfo(),
       'check':(context) => CheckScreen(),
 
     },
@@ -48,6 +47,8 @@ class MyApp extends StatelessWidget {
 }
 
 class AppState extends StatelessWidget {
+  const AppState({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -159,11 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: EdgeInsets.all(20),
                         childAspectRatio: (width < 700.0) ? 5 : 3,
                         crossAxisCount: (width < 700.0) ? 1 : 3, //Cuantos elementos por fila
-                        children: [
-                          perfilCard('assets/profile pic.png', 'Albañil', 'Pablo Mendoza B.', 3, '/', context),
-                          perfilCard('assets/profile pic.png', 'Plomero', 'Javier Martinez G.', 4, '/', context),
-                          perfilCard('assets/profile pic.png', 'Talachero', 'Gabriel Sanchez T.', 4, '/', context),
-                        ],
+                        children: [],
                       ),
                     ),
 

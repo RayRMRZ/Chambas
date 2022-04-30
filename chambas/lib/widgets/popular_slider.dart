@@ -31,7 +31,12 @@ final double width;
               scrollDirection: Axis.horizontal,
               itemCount: popular.length,
               itemBuilder: (_,int index){
-                return perfilCard(popular[index].img[0], popular[index].getAct(), popular[index].getfullName(), 5, '/', context);
+                return perfilCard(context,
+                 image: popular[index].usuario.img, 
+                 skills: popular[index].getAct(), 
+                 name: popular[index].getfullName(), 
+                 stars: int.parse(popular[index].rank), uid: popular[index].uid,
+                 route: '/', );
               }),
           )
          ],

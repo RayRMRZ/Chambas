@@ -1,21 +1,29 @@
-  
 import 'package:flutter/material.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-import '../constants/colores.dart';
+import 'package:chambas/providers/providers.dart';
+import 'package:chambas/constants/colores.dart';
+import 'package:chambas/pages/pages.dart';
+  perfilCard(BuildContext context, 
+  {required String image, required String skills, 
+   required String name, required int stars, 
+   required String route, required String uid}) {
 
-  perfilCard(String imagen, String profesion, String name, int stars, String ruta, BuildContext context) {
-    // ignore: unused_local_variable
-    double height = MediaQuery.of(context).size.height;
-
+final freeprovider = Provider.of<FreelancerProvider>(context);
+  
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(30),
         hoverColor: const Color.fromRGBO(100, 100, 100, 0.08),
-        onTap: () {
-          Navigator.of(context).pushNamed(ruta);
+        onTap: () async{
+          bool isInitialized = await freeprovider.getOnDisplayInfo(uid);
+          if(isInitialized){
+          Navigator.of(context).pushNamed(FreeInfo.route,arguments: freeprovider.onlyFreelancer);
+          }       
         },
         child: Padding(
           padding: const EdgeInsets.only( left: 10, right: 10),
@@ -39,18 +47,22 @@ import '../constants/colores.dart';
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric( horizontal: 3, vertical: 3 ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: FadeInImage(
-                      placeholder: const AssetImage('assets/logo.png'), 
-                      image: NetworkImage(imagen),
-                      //fit: BoxFit.cover,
+                    padding: const EdgeInsets.symmetric( horizontal: 20, vertical: 3 ),
+                    child: Hero(
+                      tag: uid,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: FadeInImage(
+                        placeholder: const AssetImage('assets/logo.png'), 
+                        image: NetworkImage(image),
+                        fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
+                  const SizedBox(width: 10,),
                   Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: AutoSizeText(name,
@@ -62,10 +74,10 @@ import '../constants/colores.dart';
                             fontWeight: FontWeight.w900)),
                       ),
                       Expanded(
-                        child: AutoSizeText(profesion,
+                        child: AutoSizeText(skills,
                         minFontSize: 11,
                         maxFontSize: 15,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                         style: GoogleFonts.quicksand(
                             color: Colors.black, 
                             fontWeight: FontWeight.w300)),
@@ -75,7 +87,7 @@ import '../constants/colores.dart';
                         child: AutoSizeText("🟊"*stars,
                         minFontSize: 15,
                         maxFontSize: 20,
-                        textAlign: TextAlign.justify,
+                        textAlign: TextAlign.left,
                         style: GoogleFonts.notoSansSymbols2(
                             fontSize: 20,
                             color: Colores.amarillo, 

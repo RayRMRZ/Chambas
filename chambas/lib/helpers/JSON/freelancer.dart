@@ -33,12 +33,17 @@ class Freelancers {
     };
 }
 
+Freelance parseFreeOnlyFromJson(String str) => Freelance.fromJson(json.decode(str));
+
+String freeOnlyToJson(Freelance data) => json.encode(data.toJson());
+
 class Freelance {
     Freelance({
         required this.social,
         required this.exp,
         required this.skills,
         required this.categories,
+        required this.rank,
         required this.usuario,
         required this.img,
         required this.uid,
@@ -48,6 +53,7 @@ class Freelance {
     String exp;
     List<String> skills;
     List<Category> categories;
+    String rank;
     Reference usuario;
     List<String> img;
     String uid;
@@ -81,6 +87,7 @@ class Freelance {
         exp: json["exp"],
         skills: List<String>.from(json["skills"].map((x) => x)),
         categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+        rank: json["rank"],
         usuario: Reference.fromJson(json["usuario"]),
         img: List<String>.from(json["img"].map((x) => x)),
         uid: json["uid"],
@@ -91,10 +98,33 @@ class Freelance {
         "exp": exp,
         "skills": List<dynamic>.from(skills.map((x) => x)),
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+        "rank": rank,
         "usuario": usuario.toJson(),
         "img": List<dynamic>.from(img.map((x) => x)),
         "uid": uid,
     };
 }
 
+ParseFreelance parseFreelanceFromJson(String str) => ParseFreelance.fromJson(json.decode(str));
 
+String parseFreelanceToJson(ParseFreelance data) => json.encode(data.toJson());
+
+class ParseFreelance {
+    ParseFreelance({
+        required this.route,
+        required this.freelancer,
+    });
+
+    String route;
+    Freelance freelancer;
+
+    factory ParseFreelance.fromJson(Map<String, dynamic> json) => ParseFreelance(
+        route: json["route"],
+        freelancer: Freelance.fromJson(json["freelancer"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "route": route,
+        "freelancer": freelancer.toJson(),
+    };
+}
