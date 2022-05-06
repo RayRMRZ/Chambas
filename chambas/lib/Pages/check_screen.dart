@@ -1,8 +1,10 @@
-import 'package:chambas/main.dart';
-import 'package:chambas/models/sesion.dart';
-import 'package:chambas/pages/login.dart';
 import 'package:flutter/material.dart';
+
+import 'package:chambas/main.dart';
+
+import 'package:chambas/pages/pages.dart';
 import 'package:provider/provider.dart';
+import 'package:chambas/models/Session.dart';
 
 class CheckScreen extends StatelessWidget {
   const CheckScreen({ Key? key }) : super(key: key);

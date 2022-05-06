@@ -1,8 +1,10 @@
 import 'package:chambas/services/authService.dart';
-import 'package:chambas/models/sesion.dart';
+import 'package:chambas/models/Session.dart';
 import 'package:chambas/helpers/JSON/helpers.dart';
+import 'dart:io';
 
-class User {
+import 'package:flutter/cupertino.dart';
+class User extends ChangeNotifier {
   static final User _singleton = User._internal();
 
   factory User(){
@@ -11,24 +13,25 @@ class User {
 
   User._internal();
 
-  late String name;
-  late String lastname;
-  late String age;
-  late String address;
+  late String name = '';
+  late String lastname = '';
+  late String age = '';
+  late String address = '';
 
   late String img;
 
-  late String emailUsr;
-  late String phone;
+  late String emailUsr= '';
+  late String phone= '';
 
   late DateTime registerTime;
-  late bool verify;
+  late bool verify = false;
   late String _token = '';
+  
+  File? previewImage; 
 
   String get token{
     return _token;
   } 
-
 
   Future <Auth> signIn(String email, String password) async{
     AuthService conexion = AuthService();
@@ -61,7 +64,12 @@ class User {
       } 
     }else {return Auth.bad;}    
   }
-  
+
+  previewSelectedImage(String path ){
+    img = path;
+    previewImage = File.fromUri(Uri(path: path));
+    notifyListeners();
+  }
 }
 
 enum Auth{

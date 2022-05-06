@@ -1,21 +1,18 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:chambas/Pages/ProfileEdit.dart';
-import 'package:chambas/Pages/UserProfile.dart';
-import 'package:chambas/helpers/search.dart';
-import 'package:chambas/models/sesion.dart';
-
-import 'package:chambas/services/notifications.dart';
-import 'package:chambas/widgets/popular_slider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import 'package:chambas/constants/colores.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'package:chambas/models/Session.dart';
+import 'package:chambas/models/User.dart';
 
 import 'package:chambas/pages/pages.dart';
-import 'package:chambas/providers/providers.dart';
 import 'package:chambas/widgets/widgets.dart';
+import 'package:chambas/providers/providers.dart';
+import 'package:chambas/helpers/search.dart';
+import 'package:chambas/services/notifications.dart';
 
 void main() {
   runApp(AppState());
@@ -36,6 +33,7 @@ class MyApp extends StatelessWidget {
       UserProfile.route: (context) => UserProfile(),
       ProfileEdit.route: (context) => ProfileEdit(),
       FreeInfo.route: (context)=> FreeInfo(),
+      HistorialPage.route:  (context)=> HistorialPage(),
       'check':(context) => CheckScreen(),
 
     },
@@ -59,6 +57,7 @@ class AppState extends StatelessWidget {
       ChangeNotifierProvider(create: (_)=> CategoryProvider(), lazy: false, ),
       ChangeNotifierProvider(create: (_)=> Session(), lazy: false, ),
       ChangeNotifierProvider(create: (_)=> FreelancerProvider(), lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> User(), lazy: false, ),
       ],
       child: MyApp(),
     );
@@ -94,7 +93,15 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Categorías',
         ),
       ),
-
+      InkWell(
+        splashColor: Colors.white60,
+        onTap: () {
+          Navigator.of(context).pushNamed(HistorialPage.route);
+        },
+        child: const NavBarItem(
+          text: 'Historial',
+        ),
+      ),
       if(true) InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(Login.route);

@@ -1,4 +1,5 @@
 import 'package:chambas/helpers/search.dart';
+import 'package:chambas/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -66,11 +67,7 @@ class _CatPosted extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: FadeInImage(
-                  placeholder: const AssetImage('assets/logo.png'), 
-                  image: NetworkImage(category.img),
-                  //fit: BoxFit.cover,
-                  ),
+                child: getImage(category.img),
               ),
             ),
           //const SizedBox(height: 10),

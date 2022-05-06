@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:chambas/helpers/history.dart';
+import 'package:chambas/widgets/perfil_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -22,6 +26,9 @@ final freeprovider = Provider.of<FreelancerProvider>(context);
         onTap: () async{
           bool isInitialized = await freeprovider.getOnDisplayInfo(uid);
           if(isInitialized){
+            Historial historial = Historial();
+            historial.add(uid, freeprovider.onlyFreelancer.freelancer.usuario.img, freeprovider.onlyFreelancer.freelancer.getfullName());
+            log(historial.usuarios.toString());
           Navigator.of(context).pushNamed(FreeInfo.route,arguments: freeprovider.onlyFreelancer);
           }       
         },
@@ -52,11 +59,7 @@ final freeprovider = Provider.of<FreelancerProvider>(context);
                       tag: uid,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
-                        child: FadeInImage(
-                        placeholder: const AssetImage('assets/logo.png'), 
-                        image: NetworkImage(image),
-                        fit: BoxFit.cover,
-                        ),
+                        child: getImage(image),
                       ),
                     ),
                   ),

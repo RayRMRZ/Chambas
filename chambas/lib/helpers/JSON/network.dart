@@ -37,3 +37,22 @@ class Media {
         "github": github,
     };
 }
+class Meta {
+    Meta({
+        required this.likes,
+        required this.dislikes,
+    });
+
+    int likes;
+    int dislikes;
+
+    factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        likes: json["likes"],
+        dislikes: json["Dislikes"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "likes": likes,
+        "Dislikes": dislikes,
+    };
+}

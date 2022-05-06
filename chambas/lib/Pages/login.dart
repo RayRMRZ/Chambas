@@ -10,7 +10,7 @@ import 'package:chambas/services/notifications.dart';
 
 import 'package:chambas/constants/colores.dart';
 
-import '../models/user.dart';
+import '../models/User.dart';
 
 // ignore: use_key_in_widget_constructors
 class Login extends StatefulWidget {

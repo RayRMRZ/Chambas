@@ -97,7 +97,7 @@ class Reference {
     String img;
 
     factory Reference.fromJson(Map<String, dynamic> json) => Reference(
-        id: json["_id"],
+        id: json["_id"] ?? json["uid"] ,
         name: json["name"],
         lastname: json["lastname"],
         img: json["img"],
