@@ -43,14 +43,22 @@ const _CustomAppBar(this.freelance);
     pinned: true,
     flexibleSpace:FlexibleSpaceBar(
       centerTitle: true,
-      title: Text(freelance.exp,style: GoogleFonts.quicksand(
-               color: Colors.white, 
-               fontSize: 11,
-               fontWeight: FontWeight.w800)),
+      title: Text(freelance.skills[0],style: GoogleFonts.quicksand(
+               color: Colores.crema, 
+               fontSize: 14,
+               fontWeight: FontWeight.w900,
+               shadows: <Shadow>[
+                           const Shadow(
+                              offset: Offset(2.0, -2.0),
+                              blurRadius: 4.0,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              ],)
+               ),
       background: PhotoViewGallery.builder(itemCount: 
       freelance.img.length, builder: (context,index) {
         return PhotoViewGalleryPageOptions(
-          initialScale: PhotoViewComputedScale.contained * 1.5,
+          initialScale: PhotoViewComputedScale.contained * 0.7,
           imageProvider: NetworkImage(freelance.img[index]),
            heroAttributes: PhotoViewHeroAttributes(tag: freelance.img[index])
         );
@@ -135,43 +143,14 @@ class _Perfil extends StatelessWidget {
             height: 170,),
           ),
         ),
-
         const SizedBox(width: 20,),
-
-        Column (
-        crossAxisAlignment: CrossAxisAlignment.start,
-        // ignore: prefer_const_literals_to_create_immutables
-        children: getColumn()
+        Center(
+          child: Column (
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: getColumn()
+          ),
         ),
-
-/*         Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(freelance.getSkills(),
-                    overflow: TextOverflow.ellipsis,maxLines: 2,style: GoogleFonts.quicksand(
-                    color: Colors.black, 
-                    fontWeight: FontWeight.w300)),
-        ],
-        ), */
-
-        /* Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children:  [
-            Wrap(
-              children: [
-                Chip(
-                avatar: const CircleAvatar(
-                backgroundColor: Colores.crema,
-                child: Icon(Icons.facebook, color: Colores.azul,) ),
-                label: Text(freelance.social.media.facebook,
-                    overflow: TextOverflow.ellipsis,maxLines: 2,style: GoogleFonts.quicksand(
-                    color: Colors.black, 
-                    fontWeight: FontWeight.w500)),
-                backgroundColor: Colores.crema,),
-              ],
-            )
-          ]
-        ) */
         ],
       ),
     );

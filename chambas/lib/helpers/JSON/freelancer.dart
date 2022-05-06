@@ -39,14 +39,14 @@ String freeOnlyToJson(Freelance data) => json.encode(data.toJson());
 
 class Freelance {
     Freelance({
-        required this.social,
+        required this.uid,
         required this.exp,
         required this.skills,
+        required this.social,
         required this.categories,
         required this.rank,
         required this.usuario,
         required this.img,
-        required this.uid,
     });
 
     Social social;

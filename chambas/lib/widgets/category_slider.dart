@@ -1,7 +1,10 @@
+import 'package:chambas/helpers/search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chambas/helpers/JSON/helpers.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 
 class CategorySlider extends StatelessWidget {
   final List<ParseCategory> categories;
@@ -15,9 +18,9 @@ class CategorySlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(categories.isEmpty){
-      return const SizedBox(width: double.infinity, height: 100, 
+      return  const SizedBox(width: double.infinity, height: 100, 
       child: Center(
-        child: CircularProgressIndicator(),
+        child: CupertinoActivityIndicator(radius: 15),
         ),
       );
     } 
@@ -57,7 +60,7 @@ class _CatPosted extends StatelessWidget {
       height: 120,
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: InkWell(
-        onTap: () => Navigator.of(context).pushNamed('/'),
+        onTap: () => showSearch(context: context, delegate: PerfilSearchDelegate()),
         child: Column(children: [
           ClipRRect(
               borderRadius: BorderRadius.circular(30),

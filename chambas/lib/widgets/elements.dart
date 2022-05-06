@@ -59,7 +59,7 @@ class LoginForm extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-//                      height: MediaQuery.of(context).size.height * .55,
+            //                      height: MediaQuery.of(context).size.height * .55,
                       alignment: Alignment.topCenter,
                       child: SingleChildScrollView(
                         clipBehavior: Clip.antiAlias,
@@ -97,6 +97,7 @@ Padding field(String descripcion, TextEditingController controlador) {
               if (value == null || value.isEmpty) {
                 return 'Ingrese un dato valido';
               }
+              return null;
             },
             controller: controlador,
             cursorWidth: 2,
