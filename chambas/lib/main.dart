@@ -2,6 +2,8 @@
 import 'package:chambas/Pages/ProfileEdit.dart';
 import 'package:chambas/Pages/UserProfile.dart';
 import 'package:chambas/helpers/search.dart';
+
+import 'package:chambas/Pages/toFreelanceForm.dart';
 import 'package:chambas/models/sesion.dart';
 
 import 'package:chambas/services/notifications.dart';
@@ -16,6 +18,8 @@ import 'package:chambas/constants/colores.dart';
 import 'package:chambas/pages/pages.dart';
 import 'package:chambas/providers/providers.dart';
 import 'package:chambas/widgets/widgets.dart';
+
+import 'models/user.dart';
 
 void main() {
   runApp(AppState());
@@ -35,6 +39,7 @@ class MyApp extends StatelessWidget {
       Categorias.route: (context) => Categorias(),
       UserProfile.route: (context) => UserProfile(),
       ProfileEdit.route: (context) => ProfileEdit(),
+      ToFreelance.route: (context) => ToFreelance(),
       FreeInfo.route: (context)=> FreeInfo(),
       'check':(context) => CheckScreen(),
 
@@ -81,9 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
     final session = Provider.of<Session>(context);
 
     List<Widget> navBarItems = [
+
       IconButton(onPressed: () async{
         showSearch(context: context, delegate: PerfilSearchDelegate());
       }, icon: Icon(Icons.search_outlined,color: Colores.crema,),),
+
+      IconButton(
+        onPressed: (){
+          Navigator.pushNamed(context, Login.route);}, 
+        icon: Icon(Icons.search, color: Colores.crema,), tooltip: "Buscar",),
 
       InkWell(
         splashColor: Colors.white60,
@@ -95,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 
-      if(true) InkWell(
+      if(User().getLogged() == false) InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(Login.route);
         },
@@ -103,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Ingresar',),
       ),
 
-      InkWell(
+      if(User().getLogged() == false) InkWell(
         splashColor: Colors.white60,
         onTap: () {
           Navigator.of(context).pushNamed(Register.route);
@@ -113,19 +124,21 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 
-      InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(UserProfile.route);
-        },
-        child: const NavBarItem(
-          text: 'Perfil',),
-      ),
+      if(User().getLogged() == true) InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(UserProfile.route);
+            },
+            child: const NavBarItem(
+              text: 'Perfil',),
+          ),
 
-      IconButton(onPressed: () async{
+      if(User().getLogged() == true) IconButton(onPressed: () async{
         await session.logout();
         Navigator.pushNamed(context, Login.route);
-      }, icon: Icon(Icons.logout,color: Colores.crema,),),
-
+      }, 
+      icon: Icon(Icons.logout,color: Colores.crema,),
+      tooltip: "Cerrar Sesión",
+      )
     ];
 
     double width = MediaQuery.of(context).size.width;

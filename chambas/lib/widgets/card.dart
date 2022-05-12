@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:chambas/providers/providers.dart';
 import 'package:chambas/constants/colores.dart';
 import 'package:chambas/pages/pages.dart';
+
   perfilCard(BuildContext context, 
   {required String image, required String skills, 
    required String name, required int stars, 
@@ -17,7 +18,7 @@ final freeprovider = Provider.of<FreelancerProvider>(context);
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
         hoverColor: const Color.fromRGBO(100, 100, 100, 0.08),
         onTap: () async{
           bool isInitialized = await freeprovider.getOnDisplayInfo(uid);
