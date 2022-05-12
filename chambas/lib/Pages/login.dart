@@ -30,6 +30,11 @@ class _LoginState extends State<Login> {
     final loginForm = Provider.of<LoginProvider>(context);
 
     List<Widget> navBarItems = [
+      IconButton(
+        onPressed: (){
+          Navigator.pushNamed(context, Login.route);}, 
+        icon: Icon(Icons.search, color: Colores.crema,), tooltip: "Buscar",),
+        
       InkWell(
         mouseCursor: SystemMouseCursors.help,
         splashColor: Colors.white60,

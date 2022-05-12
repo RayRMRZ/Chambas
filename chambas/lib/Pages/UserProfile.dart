@@ -1,4 +1,5 @@
 import 'package:chambas/Pages/pages.dart';
+import 'package:chambas/Pages/toFreelanceForm.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,9 @@ import 'package:chambas/constants/colores.dart';
 import 'package:chambas/pages/pages.dart';
 import 'package:chambas/widgets/widgets.dart';
 import 'package:chambas/models/user.dart';
+import 'package:provider/provider.dart';
 
+import '../models/sesion.dart';
 import 'ProfileEdit.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -23,6 +26,8 @@ class _UserProfileState extends State<UserProfile> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final session = Provider.of<Session>(context);
+
     List<Widget> navBarItems = [
       InkWell(
         onTap: () {
@@ -32,15 +37,11 @@ class _UserProfileState extends State<UserProfile> {
           text: 'Categorias',
         ),
       ),
-      
-      InkWell(
-        onTap: () {
-          //Navigator.of(context).pushNamed(Login.route);
-        },
-        child: const NavBarItem(
-          text: 'Ayuda',
-        ),
-      ),
+    
+      if(User().getLogged() == true) IconButton(onPressed: () async{
+        await session.logout();
+        Navigator.pushNamed(context, Login.route);
+      }, icon: Icon(Icons.logout,color: Colores.crema,),)
     ];
     
     double width = MediaQuery.of(context).size.width;
@@ -119,6 +120,25 @@ class _UserProfileState extends State<UserProfile> {
 
                              const Divider( height: 20,),
                              infoPersonal(User().name, User().lastname, User().emailUsr, User().age, User().address, User().phone),
+
+                             if(User().role != 'FREE_ROLE') InkWell(
+                               onTap: () => Navigator.of(context).pushNamed(ToFreelance.route),
+                               borderRadius: BorderRadius.circular(5),
+                               child: Container(
+                                 decoration: BoxDecoration(
+                                   color: Colores.amarillo,
+                                   borderRadius: BorderRadius.circular(20)
+                                 ),
+                                 child: Padding(
+                                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                   child: Text( "¡Quiero ofrecer mi servicio!",
+                                            style: GoogleFonts.quicksand(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w600)),
+                                 ),
+                               ),
+                             ),
                            ],
                          )
                          ),

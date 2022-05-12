@@ -23,7 +23,13 @@ class User {
 
   late DateTime registerTime;
   late bool verify;
+  late String role;
   late String _token = '';
+
+  bool logged = false;
+  bool getLogged(){
+    return logged;
+  }
 
   String get token{
     return _token;
@@ -55,14 +61,20 @@ class User {
        
        registerTime = response.usuario.createdAt;
        verify = response.usuario.verify;
+       role = response.usuario.role;
+
+       logged = true;
 
 
       return Auth.good; 
       } 
-    }else {return Auth.bad;}    
+    }else {logged = false; return Auth.bad;}    
   }
   
+  
 }
+
+
 
 enum Auth{
   bad,
