@@ -1,3 +1,4 @@
+import 'package:chambas/models/Session.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -26,6 +27,7 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<User>(context);
+    final session = Provider.of<Session>(context);
     List<Widget> navBarItems = [
       InkWell(
         onTap: () {
@@ -44,6 +46,11 @@ class _UserProfileState extends State<UserProfile> {
           text: 'Ayuda',
         ),
       ),
+
+      if(User().getLogged() == true) IconButton(onPressed: () async{
+        await session.logout();
+        Navigator.pushNamed(context, Login.route);
+      }, icon: const Icon(Icons.logout,color: Colores.crema,),)
     ];
     
     double width = MediaQuery.of(context).size.width;
@@ -138,6 +145,25 @@ class _UserProfileState extends State<UserProfile> {
     
                                const Divider( height: 20,),
                                infoPersonal(User().name, User().lastname, User().emailUsr, User().age, User().address, User().phone),
+                             
+                              if(User().role != 'FREE_ROLE') InkWell(
+                               onTap: () => Navigator.of(context).pushNamed(ToFreelance.route),
+                               borderRadius: BorderRadius.circular(5),
+                               child: Container(
+                                 decoration: BoxDecoration(
+                                   color: Colores.amarillo,
+                                   borderRadius: BorderRadius.circular(20)
+                                 ),
+                                 child: Padding(
+                                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                   child: Text( "¡Quiero ofrecer mi servicio!",
+                                            style: GoogleFonts.quicksand(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w600)),
+                                 ),
+                               ),
+                             ),
                              ],
                            )
                            ),

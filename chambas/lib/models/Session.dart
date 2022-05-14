@@ -1,4 +1,5 @@
 
+import 'package:chambas/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -19,5 +20,7 @@ class Session extends ChangeNotifier{
     return await storage.read(key: 'token') ?? '';
   }
 
-  Future logout()async{ await storage.delete(key: 'token');}
+  Future logout()async{
+    User().logged = false;
+    await storage.delete(key: 'token');}
 }

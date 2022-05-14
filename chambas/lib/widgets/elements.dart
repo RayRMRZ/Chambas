@@ -21,7 +21,7 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(     //SECCION BLANCA DE PÁGINA
-            child: Container(
+            child: /* Container(
               //BODY------------------------------
               margin: const EdgeInsets.only(top: 120, bottom: 40),
               width: width < 700.0 ? width*0.9 : width*0.5,
@@ -39,45 +39,47 @@ class LoginForm extends StatelessWidget {
                 ],
               ),
               alignment: Alignment.bottomRight,
-              child: Form(
-                 key: loginForm.formkey, 
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 160,
-                      margin: const EdgeInsets.all(30),
-                      child: Image.asset('assets/full logo.png'),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only( bottom: 10),
-                      child: Text("Ingresa a tu cuenta",
-                          style: GoogleFonts.quicksand(
-                              color: Colores.azul,
-                              fontSize: 35,
-                              fontWeight: FontWeight.w700)),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-            //                      height: MediaQuery.of(context).size.height * .55,
-                      alignment: Alignment.topCenter,
-                      child: SingleChildScrollView(
-                        clipBehavior: Clip.antiAlias,
-                        controller: ScrollController(),
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: [
-                            emailField("Email / Correo Electronico", emailController),
-                            passwordField('Contraseña',passwordController,loginForm),
-                          ],
+              child: */ Expanded(
+                child: Form(
+                   key: loginForm.formkey, 
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 160,
+                        margin: const EdgeInsets.all(30),
+                        child: Image.asset('assets/full logo.png'),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only( bottom: 10),
+                        child: Text("Ingresa a tu cuenta",
+                            style: GoogleFonts.quicksand(
+                                color: Colores.azul,
+                                fontSize: 35,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                          //                      height: MediaQuery.of(context).size.height * .55,
+                        alignment: Alignment.topCenter,
+                        child: SingleChildScrollView(
+                          clipBehavior: Clip.antiAlias,
+                          controller: ScrollController(),
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            children: [
+                              emailField("Email / Correo Electronico", emailController),
+                              passwordField('Contraseña',passwordController,loginForm),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
-            ),
-          );
+            );
+         /*  ); */
   }
 } 
 

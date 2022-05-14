@@ -6,6 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:chambas/pages/pages.dart';
 import 'package:chambas/widgets/widgets.dart';
 
+import '../models/user.dart';
+
+
 // ignore: use_key_in_widget_constructors
 class Categorias extends StatefulWidget {
   static const String route = '/categorias'; 
@@ -18,7 +21,15 @@ class _CategoriasState extends State<Categorias> {
   @override
   Widget build(BuildContext context) {
     List<Widget> navBarItems = [
-      InkWell(
+      
+      if(User().getLogged() == false) InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(Login.route);
+        },
+        child: const NavBarItem(
+          text: 'Ingresar',),
+      ),
+      if(User().getLogged() == false) InkWell(
         splashColor: Colors.white60,
         onTap: () {
           Navigator.of(context).pushNamed(Register.route);
@@ -27,16 +38,15 @@ class _CategoriasState extends State<Categorias> {
           text: 'Registrarse',
         ),
       ),
-      InkWell(
-        mouseCursor: SystemMouseCursors.help,
-        splashColor: Colors.white60,
+
+      if(User().getLogged() == true) InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(Login.route);
+          Navigator.of(context).pushNamed(UserProfile.route);
         },
         child: const NavBarItem(
-          text: 'Ingresar',
-        ),
+          text: 'Perfil',),
       ),
+
     ];
 
     double width = MediaQuery.of(context).size.width;

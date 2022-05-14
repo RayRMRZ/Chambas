@@ -30,6 +30,7 @@ class _LoginState extends State<Login> {
     final loginForm = Provider.of<LoginProvider>(context);
 
     List<Widget> navBarItems = [
+        
       InkWell(
         mouseCursor: SystemMouseCursors.help,
         splashColor: Colors.white60,
@@ -68,11 +69,11 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         body: Stack(
           children: [
-            Container(
+            /* Container(
               color: Colores.azul,
           
               // AQUI VA A IR LA IMAGEN DINAMICA DE OFICIOS
-            ),
+            ), */
              LoginForm(width,
                       height,
                       emailController,

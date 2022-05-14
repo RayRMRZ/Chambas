@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:chambas/services/authService.dart';
 import 'package:chambas/models/Session.dart';
 import 'package:chambas/helpers/JSON/helpers.dart';
@@ -13,21 +14,27 @@ class User extends ChangeNotifier {
 
   User._internal();
 
-  late String name = '';
-  late String lastname = '';
-  late String age = '';
-  late String address = '';
+  late String name;
+  late String lastname;
+  late String age;
+  late String address;
 
   late String img;
 
-  late String emailUsr= '';
-  late String phone= '';
+  late String emailUsr;
+  late String phone;
 
   late DateTime registerTime;
-  late bool verify = false;
-  late String _token = '';
+  late bool verify;
+  late String role;
+  late String _token;
   
   File? previewImage; 
+
+  bool logged = false;
+  bool getLogged(){
+    return logged;
+  }
 
   String get token{
     return _token;
@@ -58,6 +65,9 @@ class User extends ChangeNotifier {
        
        registerTime = response.usuario.createdAt;
        verify = response.usuario.verify;
+       role = response.usuario.role;
+
+       logged = true;
 
 
       return Auth.good; 
@@ -71,6 +81,8 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+
 
 enum Auth{
   bad,

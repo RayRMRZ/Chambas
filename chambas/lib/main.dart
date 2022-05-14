@@ -30,8 +30,9 @@ class MyApp extends StatelessWidget {
       Register.route: (context) => Register(),
       Login.route: (context) => Login(),
       Categorias.route: (context) => Categorias(),
-      UserProfile.route: (context) => UserProfile(),
+       UserProfile.route: (context) => UserProfile(), 
       ProfileEdit.route: (context) => ProfileEdit(),
+      ToFreelance.route: (context) => ToFreelance(),
       FreeInfo.route: (context)=> FreeInfo(),
       HistorialPage.route:  (context)=> HistorialPage(),
       'check':(context) => CheckScreen(),
@@ -57,7 +58,7 @@ class AppState extends StatelessWidget {
       ChangeNotifierProvider(create: (_)=> CategoryProvider(), lazy: false, ),
       ChangeNotifierProvider(create: (_)=> Session(), lazy: false, ),
       ChangeNotifierProvider(create: (_)=> FreelancerProvider(), lazy: false, ),
-      ChangeNotifierProvider(create: (_)=> User(), lazy: false, ),
+       ChangeNotifierProvider(create: (_)=> User(), lazy: false, ), 
       ],
       child: MyApp(),
     );
@@ -80,10 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
     final session = Provider.of<Session>(context);
 
     List<Widget> navBarItems = [
-      IconButton(onPressed: () async{
-        showSearch(context: context, delegate: PerfilSearchDelegate());
-      }, icon: Icon(Icons.search_outlined,color: Colores.crema,),),
-
       InkWell(
         splashColor: Colors.white60,
         onTap: () {
@@ -102,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Historial',
         ),
       ),
-      if(true) InkWell(
+      if(User().getLogged() == false) InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(Login.route);
         },
@@ -110,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           text: 'Ingresar',),
       ),
 
-      InkWell(
+      if(User().getLogged() == false) InkWell(
         splashColor: Colors.white60,
         onTap: () {
           Navigator.of(context).pushNamed(Register.route);
@@ -120,19 +117,25 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
 
-      InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(UserProfile.route);
-        },
-        child: const NavBarItem(
-          text: 'Perfil',),
+      if(User().getLogged() == true) InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(UserProfile.route);
+            },
+            child: const NavBarItem(
+              text: 'Perfil',),
+          ),
+
+      if(User().getLogged() == true) IconButton(onPressed: () async{
+        await session.logout();
+        Navigator.pushNamed(context, Login.route);
+      }, 
+      icon: Icon(Icons.logout,color: Colores.crema,),
+      tooltip: "Cerrar Sesión",
       ),
 
       IconButton(onPressed: () async{
-        await session.logout();
-        Navigator.pushNamed(context, Login.route);
-      }, icon: Icon(Icons.logout,color: Colores.crema,),),
-
+        showSearch(context: context, delegate: PerfilSearchDelegate());
+      }, icon: Icon(Icons.search_outlined,color: Colores.crema,),),
     ];
 
     double width = MediaQuery.of(context).size.width;
