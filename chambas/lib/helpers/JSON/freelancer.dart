@@ -73,7 +73,7 @@ class Freelance {
       }
       return acum;
     }
-    
+
     String getAct(){
       String acum = '';
       for(int i = 0; i<3 ; i++){
