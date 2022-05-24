@@ -1,5 +1,6 @@
 import 'package:chambas/services/authService.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -113,6 +114,7 @@ class _RegisterState extends State<Register> {
                               field('Edad',edadController),
                               field('Dirección', direccionController),
                               field('Número telefónico', numeroTelController),
+                              const SizedBox(height: 50,)
                             ],
                           )
                           ),
@@ -155,11 +157,25 @@ class _RegisterState extends State<Register> {
                      
                    if(registCorrect){
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Usted se ha registrado correctamente')),);
+                      SnackBar(content: 
+                      Row(children: 
+                   const [ 
+                     FaIcon(Icons.emoji_people,color: Colores.crema,),
+                        SizedBox(width: 20,),
+                        Expanded(child: Text('Usted ha sido registrado correctamente')),
+                    ],),
+                    backgroundColor: Colores.azul,),);
                       Navigator.of(context).pushNamed(Login.route);
                   }else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Verifique si sus datos son correctos')),);
+                      SnackBar(content: 
+                      Row(children: 
+                   const [ 
+                     FaIcon(FontAwesomeIcons.fileCircleQuestion,color: Colores.crema,),
+                        SizedBox(width: 20,),
+                        Expanded(child: Text('Verifique sus datos correctamente')),
+                    ],),
+                    backgroundColor: Colores.rojo,),);
                   } 
                   }
                     

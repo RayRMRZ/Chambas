@@ -67,22 +67,42 @@ class _LoginState extends State<Login> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            /* Container(
+            Container(
               color: Colores.azul,
+    
+              // AQUI VA A IR LA IMAGEN DINAMICA DE DIFERENTES OFICIOS
+            ),
+
+
+             Center(
+               child: Container(
+                 margin: const EdgeInsets.only(top: 100, bottom: 40),
+                  width: width * 0.9,
+                  height: height,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 10,
+                        blurRadius: 20,
+                        offset: const Offset(0, 0), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.bottomCenter,
+                 child: LoginForm( emailController, passwordController, loginForm),
+               ),
+             ), 
           
-              // AQUI VA A IR LA IMAGEN DINAMICA DE OFICIOS
-            ), */
-             LoginForm(width,
-                      height,
-                      emailController,
-                      passwordController,
-                      loginForm), 
-          
-            Container(          //BOTÓN AMARILLO REGISTRARSE-------------------------
+            Container(  
+                      //BOTÓN AMARILLO REGISTRARSE-------------------------
               alignment: Alignment.bottomCenter,
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 150),
               child: InkWell(
                 
                 splashColor: Colores.crema,

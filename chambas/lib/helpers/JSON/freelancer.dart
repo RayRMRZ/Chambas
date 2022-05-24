@@ -40,6 +40,7 @@ String freeOnlyToJson(Freelance data) => json.encode(data.toJson());
 class Freelance {
     Freelance({
         required this.uid,
+        required this.description, 
         required this.exp,
         required this.skills,
         required this.social,
@@ -50,6 +51,7 @@ class Freelance {
     });
 
     Social social;
+    String description = "No description"; 
     String exp;
     List<String> skills;
     List<Category> categories;
@@ -84,6 +86,7 @@ class Freelance {
 
     factory Freelance.fromJson(Map<String, dynamic> json) => Freelance(
         social: Social.fromJson(json["social"]),
+        description: json["desc"] ?? "", 
         exp: json["exp"],
         skills: List<String>.from(json["skills"].map((x) => x)),
         categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
@@ -96,6 +99,7 @@ class Freelance {
     Map<String, dynamic> toJson() => {
         "social": social.toJson(),
         "exp": exp,
+        "desc": description, 
         "skills": List<dynamic>.from(skills.map((x) => x)),
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
         "rank": rank,

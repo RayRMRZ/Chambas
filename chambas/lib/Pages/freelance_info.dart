@@ -1,5 +1,6 @@
 
 import 'package:chambas/constants/colores.dart';
+import 'package:chambas/widgets/review_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,18 +18,27 @@ class FreeInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 final freeprovider = Provider.of<FreelancerProvider>(context);
-     return Scaffold(
-      body: CustomScrollView(
-      slivers: [
-        _CustomAppBar(freeprovider.onlyFreelancer.freelancer),
-        SliverList(
-          delegate: SliverChildListDelegate([
-            _PersonalDesc(freeprovider.onlyFreelancer.freelancer),
-          ])
+     return MaterialApp(
+       home: Scaffold(
+        body: CustomScrollView(
+        slivers: [
+          _CustomAppBar(freeprovider.onlyFreelancer.freelancer),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              _PersonalDesc(freeprovider.onlyFreelancer.freelancer),
+                Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20,),
+            child: Text('Mis redes sociales:',textAlign: TextAlign.left, style: GoogleFonts.quicksand(
+                              color: Colors.black, fontWeight: FontWeight.w500)),),
+            const Divider(),
+              _SocialMedia(freeprovider.onlyFreelancer.freelancer),
+              ReviewSlider(freeprovider.onDisplayReviews.reviews)
+            ])
+          )
+          ],
         )
-        ],
-      )
-    );
+         ),
+     );
   }
 }
 
@@ -42,6 +52,7 @@ const _CustomAppBar(this.freelance);
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      backgroundColor: Colores.azul,
     expandedHeight: 280,
     floating: false,
     pinned: true,
@@ -50,7 +61,7 @@ const _CustomAppBar(this.freelance);
       title: Text(freelance.getfullName(),style: GoogleFonts.quicksand(
                color: Colores.crema, 
                fontSize: 14,
-               fontWeight: FontWeight.w900,
+               fontWeight: FontWeight.w800,
                shadows: <Shadow>[
                            const Shadow(
                               offset: Offset(2.0, -2.0),
@@ -111,31 +122,13 @@ class _Perfil extends StatelessWidget {
         backgroundColor: Colores.crema,));
 
        columnPerfil.add(Wrap(
-         alignment:  WrapAlignment.center,
+         alignment:  WrapAlignment.start,
          spacing: 3.2,
          direction: Axis.vertical,
          children: categories,));
-      columnPerfil.add(const SizedBox(height: 10,));
-      columnPerfil.add(
-         Row(
-        children: [
-          IconButton(icon: const FaIcon(FontAwesomeIcons.facebookSquare, size: 20,), splashRadius: 10, color: Colors.blue, onPressed: () async {
-            if (!await launchUrl(Uri.parse(freelance.social.media.facebook))) throw 'Could not launch';
-          },),
-          IconButton(icon: const FaIcon(FontAwesomeIcons.whatsapp, size: 20), splashRadius: 10,color: Colors.lime, onPressed: () async{
-            if (!await launchUrl(Uri.parse("whatsapp://send?phone=+522382754698&text=Usted ha sido hackeado"))) throw 'Could not launch';
-          },),
-          IconButton(icon: const FaIcon(FontAwesomeIcons.githubAlt, size: 20),splashRadius: 10,color: Colors.brown, onPressed: () async{
-            if (!await launchUrl(Uri.parse(freelance.social.media.github))) throw 'Could not launch';
-          },),
-          IconButton(icon: const FaIcon(FontAwesomeIcons.youtube, size: 20),splashRadius: 10,color: Colors.red, onPressed: () async{
-            if (!await launchUrl(Uri.parse(freelance.social.media.facebook))) throw 'Could not launch';
-          },),
-          IconButton(icon: const FaIcon(FontAwesomeIcons.instagram, size: 20),splashRadius: 10,color: const Color.fromRGBO(244, 54, 235, 1), onPressed: () async{
-            if (!await launchUrl(Uri.parse(freelance.social.media.instagram))) throw 'Could not launch';
-          },),
-        ],
-      ),);
+      columnPerfil.add(const SizedBox(height: 3,));
+      /* columnPerfil.add(
+          */
 
       return columnPerfil;
     }
@@ -163,12 +156,12 @@ class _Perfil extends StatelessWidget {
           Positioned(
             bottom: 1,
             right: 15,
-            child: Text(freelance.exp,
+            child: 
+          Text(freelance.exp,
                   overflow: TextOverflow.ellipsis,style: GoogleFonts.quicksand(
                   color: Colors.white, 
                   fontSize: 10,
-                  fontWeight: FontWeight.w400)),
-          ),
+                  fontWeight: FontWeight.w400)) ,)
           ]
         ),
       ), 
@@ -202,7 +195,7 @@ const _PersonalDesc(this.freelance);
             children:  [
 
               Padding(
-                padding: const EdgeInsets.only(left: 50),
+                padding: const EdgeInsets.only(left: 50, top: 15),
                 child: Row(
                   children: [
                     Container(
@@ -233,8 +226,7 @@ const _PersonalDesc(this.freelance);
         AnimatedContainer(
           duration: const Duration(seconds: 2 ),
           padding: const EdgeInsets.only(left: 50, right: 50, top: 15, bottom: 5),
-          child: Text("""Soy un diseñador Gráfico de Tehuacán, Puebla. He aprendido este oficio por mi propia cuenta, ya que es algo que desde que lo descubrí, me ha gustado mucho. No tengo licenciatura pero sí los conocimientos necesarios para crear la imagen de tu negocio y darle el branding que necesita, brindando un servicio profesional con comunicacion clara de su vision sobre el flyer, logo, o diseño que necesite.
-          """, textAlign: TextAlign.justify, style:  GoogleFonts.roboto(
+          child: Text( freelance.description, textAlign: TextAlign.justify, style:  GoogleFonts.roboto(
            color: Colors.black, 
            fontWeight: FontWeight.w300
           ),),),
@@ -243,5 +235,77 @@ const _PersonalDesc(this.freelance);
         ),
       ],
     );
+  }
+}
+
+class _SocialMedia extends StatelessWidget {
+  
+final Freelance freelance;
+
+  const _SocialMedia(this.freelance) ;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Tooltip(
+            message: 'Facebook',
+            child: 
+            (freelance.social.media.facebook != '') ?
+            IconButton(icon: const FaIcon(FontAwesomeIcons.facebookSquare, size: 30,), splashRadius: 10, color: Colors.blue, onPressed: () async {
+              if (!await launchUrl(Uri.parse(freelance.social.media.facebook))) throw 'Could not launch';
+            },) : null,
+          ),
+          Tooltip(
+            message: 'Whatsapp',
+            child: 
+            (freelance.social.media.whatsapp != '') ?
+            IconButton(icon: const FaIcon(FontAwesomeIcons.whatsapp, size: 30), splashRadius: 10,color: Colors.lime, onPressed: () async{
+              if (!await launchUrl(Uri.parse(freelance.social.media.whatsapp))) throw 'Could not launch';
+            },): null,
+          ),
+          Tooltip(
+            message: 'Linkedin',
+            child: 
+            (freelance.social.media.linkedin != '') ?
+            IconButton(icon: const FaIcon(FontAwesomeIcons.linkedin, size: 30), splashRadius: 10,color: Colors.blueGrey, onPressed: () async{
+              if (!await launchUrl(Uri.parse(freelance.social.media.linkedin))) throw 'Could not launch';
+            },) : null,
+          ),
+          Tooltip(
+            message: 'GitHub',
+            child: 
+            (freelance.social.media.github != '') ?
+            IconButton(icon: const FaIcon(FontAwesomeIcons.githubAlt, size: 30),splashRadius: 10,color: Colors.brown, onPressed: () async{
+              if (!await launchUrl(Uri.parse(freelance.social.media.github))) throw 'Could not launch';
+            },) : null,
+          ),
+          Tooltip(
+            message: 'Youtube',
+            child:
+            (freelance.social.media.youtube!= '') ?
+             IconButton(icon: const FaIcon(FontAwesomeIcons.youtube, size: 30),splashRadius: 10,color: Colors.red, onPressed: () async{
+              if (!await launchUrl(Uri.parse(freelance.social.media.youtube))) throw 'Could not launch';
+            },) : null,
+          ),
+          Tooltip(
+            message: 'Instagram',
+            child: 
+            (freelance.social.media.instagram != '') ?
+            IconButton(icon: const FaIcon(FontAwesomeIcons.instagram, size: 30),splashRadius: 10,color: const Color.fromARGB(255, 224, 132, 132), onPressed: () async{
+              if (!await launchUrl(Uri.parse(freelance.social.media.instagram))) throw 'Could not launch';
+            },): null,
+          ),
+          Tooltip(
+            message: 'Twitter',
+            child: 
+            (freelance.social.media.twitter != '') ?
+            IconButton(icon: const FaIcon(FontAwesomeIcons.twitter, size: 30), splashRadius: 10,color: Colors.lightBlue, onPressed: () async{
+              if (!await launchUrl(Uri.parse(freelance.social.media.twitter))) throw 'Could not launch';
+            },): null,
+          ),
+        ],
+      );
   }
 }

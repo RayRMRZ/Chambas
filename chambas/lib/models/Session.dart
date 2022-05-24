@@ -6,12 +6,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class Session extends ChangeNotifier{
 
   String _token = '';
+  String _uid = '';
   final storage = const FlutterSecureStorage();
   
-  Session(){
-    saveTokenStorage();
-  }
+  Session();
   set token(tkn){ _token = tkn;}
+
+  set uid(uid){
+    _uid = uid;
+  }
 
   saveTokenStorage() async{
     await storage.write(key: 'token', value: _token);
@@ -23,4 +26,8 @@ class Session extends ChangeNotifier{
   Future logout()async{
     User().logged = false;
     await storage.delete(key: 'token');}
+
+  saveUidStorage() async{
+    await storage.write(key: 'uid', value: _uid);
+  }
 }

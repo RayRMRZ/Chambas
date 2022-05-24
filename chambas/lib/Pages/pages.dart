@@ -7,3 +7,4 @@ export 'package:chambas/pages/profile_edit.dart';
 export 'package:chambas/pages/register.dart';
 export 'package:chambas/pages/user_profile.dart';
 export 'package:chambas/pages/toFreelanceForm.dart';
+export 'package:chambas/main.dart';

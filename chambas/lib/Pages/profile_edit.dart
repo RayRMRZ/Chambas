@@ -20,6 +20,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    
     List<Widget> navBarItems = [
       InkWell(
         onTap: () {
@@ -54,11 +55,18 @@ class _ProfileEditState extends State<ProfileEdit> {
                child: Padding(
                  padding: const EdgeInsets.only(top: 110),
                  child: Column(
-                   children: const [],
+                   children: const [
+                
+
+                   ]
                  ),
                ),
              ),
-    
+
+
+
+
+
             AnimatedContainer( // RESPONSIVE NAVBAR EN MOBILES
               //NAVBAR---------------------
               margin: const EdgeInsets.only(top: 79.0),
@@ -123,6 +131,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         ),
       ),
     );
+
   }
 
   

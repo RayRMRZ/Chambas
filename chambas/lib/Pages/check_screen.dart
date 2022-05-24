@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:chambas/main.dart';
-
 import 'package:chambas/pages/pages.dart';
 import 'package:provider/provider.dart';
 import 'package:chambas/models/Session.dart';

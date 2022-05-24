@@ -3,6 +3,7 @@ import 'package:chambas/helpers/history.dart';
 import 'package:chambas/pages/pages.dart';
 import 'package:chambas/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +23,9 @@ class _HistorialPageState extends State<HistorialPage> {
     Historial historial = Historial();
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colores.azul,),
-      body: 
+      appBar: AppBar(backgroundColor: Colores.rojo,),
+      body: (historial.usuarios.isEmpty) ? 
+      const Center(child: FaIcon(FontAwesomeIcons.addressBook, color: Colores.rojo, size: 50,)):
          ListView.builder(
             itemCount: historial.usuarios.length,
             itemBuilder: (BuildContext context, int index) {

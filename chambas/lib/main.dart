@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:chambas/constants/colores.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:chambas/models/Session.dart';
 import 'package:chambas/models/User.dart';
 
-import 'package:chambas/pages/pages.dart';
 import 'package:chambas/widgets/widgets.dart';
+import 'package:chambas/pages/pages.dart';
+import 'package:chambas/router/app_routes.dart';
 import 'package:chambas/providers/providers.dart';
 import 'package:chambas/helpers/search.dart';
 import 'package:chambas/services/notifications.dart';
@@ -23,24 +23,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-    initialRoute: 'check',
-    routes: {
-      'home' :(context) => MyHomePage(),
-      Register.route: (context) => Register(),
-      Login.route: (context) => Login(),
-      Categorias.route: (context) => Categorias(),
-       UserProfile.route: (context) => UserProfile(), 
-      ProfileEdit.route: (context) => ProfileEdit(),
-      ToFreelance.route: (context) => ToFreelance(),
-      FreeInfo.route: (context)=> FreeInfo(),
-      HistorialPage.route:  (context)=> HistorialPage(),
-      'check':(context) => CheckScreen(),
-
-    },
+    return MaterialApp( 
+    initialRoute: AppRoutes.initialRoute,
+    routes: AppRoutes.routes,
     scaffoldMessengerKey: NotificationService.msgKey,
     home: MyHomePage(),
-    theme: ThemeData.light().copyWith(),
+    theme: ThemeData.light(),
     debugShowCheckedModeBanner: false,
   );
   }
@@ -54,11 +42,11 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-      ChangeNotifierProvider(create: (_)=> LoginProvider(), lazy: false, ),
-      ChangeNotifierProvider(create: (_)=> CategoryProvider(), lazy: false, ),
-      ChangeNotifierProvider(create: (_)=> Session(), lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> LoginProvider()   ,   lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> CategoryProvider(),   lazy: false, ),
+      ChangeNotifierProvider(create: (_)=> Session()         ,   lazy: false, ),
       ChangeNotifierProvider(create: (_)=> FreelancerProvider(), lazy: false, ),
-       ChangeNotifierProvider(create: (_)=> User(), lazy: false, ), 
+      ChangeNotifierProvider(create: (_)=> User()            ,   lazy: false, ), 
       ],
       child: MyApp(),
     );
@@ -76,11 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
     
   @override
   Widget build(BuildContext context) {
-    final catprovider = Provider.of<CategoryProvider>(context);
-    final freeprovider = Provider.of<FreelancerProvider>(context);
-    final session = Provider.of<Session>(context);
+    final catprovider   = Provider.of<CategoryProvider>(context);
+    final freeprovider  = Provider.of<FreelancerProvider>(context);
+    final session       = Provider.of<Session>(context);
 
     List<Widget> navBarItems = [
+      IconButton(onPressed: () async{
+        showSearch(context: context, delegate: PerfilSearchDelegate());
+      }, icon: Icon(Icons.search_outlined,color: Colores.crema,),),
+      
       InkWell(
         splashColor: Colors.white60,
         onTap: () {
@@ -132,10 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
       icon: Icon(Icons.logout,color: Colores.crema,),
       tooltip: "Cerrar Sesión",
       ),
-
-      IconButton(onPressed: () async{
-        showSearch(context: context, delegate: PerfilSearchDelegate());
-      }, icon: Icon(Icons.search_outlined,color: Colores.crema,),),
     ];
 
     double width = MediaQuery.of(context).size.width;
@@ -163,22 +151,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       PopularFrelancers(width, popular: freeprovider.onDisplayFreelancer),
                       Divider( height: 20,),
                       
-                      Text("      Contratados Recientemente",
-                              textAlign: TextAlign.left, 
-                              style: GoogleFonts.quicksand(
-                              color: Colors.black, fontWeight: FontWeight.w500)),
-                      SizedBox(
-                        height: (width > 1050)?  300 :(width > 700.0)? 200 : 400,
-                        child: GridView.count(
-                          mainAxisSpacing: 5,
-                          crossAxisSpacing: 5,
-                          padding: EdgeInsets.all(20),
-                          childAspectRatio: (width < 700.0) ? 5 : 3,
-                          crossAxisCount: (width < 700.0) ? 1 : 3, //Cuantos elementos por fila
-                          children: const [],
-                        ),
-                      ),
-    
                     ],
                   ),
                   ),

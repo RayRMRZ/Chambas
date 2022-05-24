@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:chambas/helpers/debouncer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +8,7 @@ class FreelancerProvider extends ChangeNotifier{
   final String _baseUrl = 'appchambas.herokuapp.com';
   
   List<Freelance> onDisplayFreelancer = [];
+  late Reviews onDisplayReviews;
 
   final StreamController<List<Result>> _suggestionsStreamController = StreamController.broadcast();
   
@@ -54,19 +53,26 @@ class FreelancerProvider extends ChangeNotifier{
   Future<bool> getOnDisplayInfo(String uid) async{
   
   final url = Uri.https(_baseUrl,'/api/usuarios/free/$uid');
-  final response = await http.get(url, headers: {'content-type': 'application/json'});
-  final respfreelance = parseFreelanceFromJson(response.body);
-  onlyFreelancer = respfreelance;  
+  final url2 = Uri.https(_baseUrl,'/api/reviews/$uid');
+
+  final results = await Future.wait([
+    http.get(url, headers: {'content-type': 'application/json'}),
+    http.get(url2, headers: {'content-type': 'application/json'})
+  ]);
+ 
+  final respfreelance = parseFreelanceFromJson(results[0].body);
+  onlyFreelancer = respfreelance;
+  final respfreelanceReviews = emptyFromJson(results[1].body);
+  onDisplayReviews = respfreelanceReviews;  
 
   notifyListeners();
   
   return true;
   }
-
+ 
   void getSuggestionsByQuery(String query){
     debouncer.value = '';
     debouncer.onValue = (value) async {
-      log('$value');
       final results = await searchFreelance(value);
       _suggestionsStreamController.add(results);
     };

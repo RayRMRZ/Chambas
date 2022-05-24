@@ -1,4 +1,3 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
 class Historial {
@@ -12,7 +11,7 @@ Historial._internal();
 
 List<Map<String, String>> usuarios = [];
 
-final storage = const FlutterSecureStorage();
+
 
   add(String id, String img, String name){
     var usuario = {

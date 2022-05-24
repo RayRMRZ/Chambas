@@ -17,24 +17,39 @@ class Social {
 class Media {
     Media({
         required this.facebook,
-        required this.instagram,
+        required this.whatsapp,
+        required this.linkedin,
         required this.github,
+        required this.youtube,
+        required this.instagram,
+        required this.twitter,
     });
 
     String facebook;
+    String whatsapp;
     String instagram;
     String github;
+    String twitter;
+    String youtube;
+    String linkedin;
 
     factory Media.fromJson(Map<String, dynamic> json) => Media(
-        facebook: json["facebook"],
-        instagram: json["instagram"],
-        github: json["github"],
+        facebook: json["facebook"] ?? '',
+        whatsapp: json["whatsapp"] ?? '',
+        linkedin: json["linkedin"] ?? '',
+        github: json["github"] ?? '',
+        youtube: json["youtube"] ?? '',
+        instagram: json["instagram"] ?? '',
+        twitter: json["twitter"] ?? '',
     );
 
     Map<String, dynamic> toJson() => {
         "facebook": facebook,
+        "twitter": twitter,
         "instagram": instagram,
         "github": github,
+        "youtube" : youtube,
+        "linkedin" : linkedin
     };
 }
 class Meta {

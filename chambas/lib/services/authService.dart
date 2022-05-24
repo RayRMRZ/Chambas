@@ -1,7 +1,10 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService{
@@ -14,6 +17,7 @@ class AuthService{
 
   AuthService._internal();
 
+  final storage = const FlutterSecureStorage();
  final rootURI = 'https://appchambas.herokuapp.com';
 
   Future <String> auth({required String email, required String password}) async {
@@ -61,6 +65,7 @@ class AuthService{
 
     Completer completer = Completer<String>();
     bool succes = false;
+    
    try{
      
       final http.Response resp = await http.post(url, body: frame , headers: {'content-type': 'application/json'});
@@ -75,5 +80,57 @@ class AuthService{
       completer.completeError('Sin conexión a internet');
     }
     return succes;
+  }
+
+  Future <bool> toFreelance(
+      { required String desc, 
+        required String exp,
+        required List<String> skills,
+        required Map < String , Map<String,String>> media,
+        required List<String> categories,
+        required String usuario } ) async{
+
+    final url = Uri.parse('$rootURI/api/usuarios/free');
+    var frame = jsonEncode({
+	  'desc'    :     desc,
+	  'exp'     :     exp,
+	  'skills'  :   skills,
+	  'social'  :   media,
+	  'categories': categories,
+	  'usuario':    usuario,  }); 
+
+    Completer completer = Completer<String>();  
+    bool succes = false;
+    String token = await storage.read(key: 'token') ?? '';
+    
+    try{
+     
+      final http.Response resp = await http.post(url, body: frame , headers: {'content-type': 'application/json', 'Authoritation': token});
+
+        if (resp.statusCode == 200) {
+        succes = true;
+        } else {
+        completer.completeError('Ocurrió un error con la petición! ${resp.statusCode}');
+        }
+
+    }catch(error){
+      completer.completeError('Sin conexión a internet');
+    } 
+    return succes; 
+  }
+
+  Future<bool> updateImage(String uid,File? pictureFile) async{
+    final url = Uri.parse('$rootURI/api/file/usuario/$uid');
+    final imageRequest = http.MultipartRequest('PUT', url );
+    String token = await storage.read(key: 'token') ?? '';
+    imageRequest.headers['Authoritation'] =  token;
+    final file = await http.MultipartFile.fromPath('archivo', pictureFile!.path, 
+    contentType: MediaType('multipart', 'form-data'),);
+
+    imageRequest.files.add(file);
+
+    // ignore: unused_local_variable
+    final streamResponse = await imageRequest.send();
+    return true;
   }
 }

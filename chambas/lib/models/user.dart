@@ -1,4 +1,5 @@
 // ignore: file_names
+
 import 'package:chambas/services/authService.dart';
 import 'package:chambas/models/Session.dart';
 import 'package:chambas/helpers/JSON/helpers.dart';
@@ -13,7 +14,8 @@ class User extends ChangeNotifier {
   }
 
   User._internal();
-
+  AuthService conexion = AuthService();
+  late String uid;
   late String name;
   late String lastname;
   late String age;
@@ -27,21 +29,17 @@ class User extends ChangeNotifier {
   late DateTime registerTime;
   late bool verify;
   late String role;
-  late String _token;
   
   File? previewImage; 
 
   bool logged = false;
+
   bool getLogged(){
     return logged;
   }
 
-  String get token{
-    return _token;
-  } 
-
   Future <Auth> signIn(String email, String password) async{
-    AuthService conexion = AuthService();
+    
     String data = await conexion.auth(email: email, password: password);
 
     if(data != 'auth.fallo'){
@@ -53,8 +51,11 @@ class User extends ChangeNotifier {
     
       var response = parseSessionFromJson(data);
       Session session = Session();
-      session.token = response.token; _token = response.token;
-
+      session.token = response.token;
+      session.saveTokenStorage();
+      session.uid = response.usuario.uid; uid = response.usuario.uid;
+      session.saveUidStorage();
+        
        name = response.usuario.name;
        lastname = response.usuario.lastname;
        age = response.usuario.age;
@@ -78,11 +79,11 @@ class User extends ChangeNotifier {
   previewSelectedImage(String path ){
     img = path;
     previewImage = File.fromUri(Uri(path: path));
+    conexion.updateImage(uid,previewImage);
+    
     notifyListeners();
   }
 }
-
-
 
 enum Auth{
   bad,

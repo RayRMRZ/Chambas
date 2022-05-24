@@ -21,7 +21,7 @@ class CategorySlider extends StatelessWidget {
     if(categories.isEmpty){
       return  const SizedBox(width: double.infinity, height: 100, 
       child: Center(
-        child: CupertinoActivityIndicator(radius: 15),
+        child: CupertinoActivityIndicator(radius: 18),
         ),
       );
     } 
